@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "K:\\VSCode2022\\GitRepos\\QengineTest\\QengineTest\\QengineProject\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{774D6EF3-B762-4648-9366-6900DE726735}|QengineProject\\QengineProject.vcxproj|K:\\VSCode2022\\GitRepos\\QengineTest\\QengineTest\\QengineProject\\QengineProject\\QengineProject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{774D6EF3-B762-4648-9366-6900DE726735}|QengineProject\\QengineProject.vcxproj|solutionrelative:QengineProject\\QengineProject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "QengineProject.cpp",
+              "DocumentMoniker": "K:\\VSCode2022\\GitRepos\\QengineTest\\QengineTest\\QengineProject\\QengineProject\\QengineProject.cpp",
+              "RelativeDocumentMoniker": "QengineProject\\QengineProject.cpp",
+              "ToolTip": "K:\\VSCode2022\\GitRepos\\QengineTest\\QengineTest\\QengineProject\\QengineProject\\QengineProject.cpp",
+              "RelativeToolTip": "QengineProject\\QengineProject.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-09-26T14:25:00.275Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
