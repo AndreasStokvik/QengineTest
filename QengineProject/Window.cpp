@@ -21,6 +21,10 @@ Window::Window(int width, int height, const std::string& title) {
         std::cerr << "Failed to initialize GLAD" << std::endl;
         exit(EXIT_FAILURE);
     }
+
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    // Optionally set the cursor position to the center
+    glfwSetCursorPos(window, width / 2, height / 2);
 }
 
 // Destructor
@@ -50,4 +54,9 @@ void Window::swapBuffers() {
 // Check if the window should close
 bool Window::shouldClose() {
     return glfwWindowShouldClose(window);
+}
+
+bool Window::isKeyPressed(int key)
+{
+    return glfwGetKey(window, key) == GLFW_PRESS;
 }

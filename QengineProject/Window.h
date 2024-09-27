@@ -13,6 +13,16 @@ public:
     void swapBuffers();                                         // Swap front and back buffers
     bool shouldClose();                                         // Check if window should close
 
+    bool isKeyPressed(int key);
+
+    // Set the mouse callback
+    void setMouseCallback(GLFWcursorposfun callback) {
+        glfwSetCursorPosCallback(window, callback);
+    }
+    void setUserPointer(void* pointer) {
+        glfwSetWindowUserPointer(window, pointer);
+    }
+
 private:
     GLFWwindow* window;                                         // GLFW window handle
     void initGLFW();                                            // Initialize GLFW
