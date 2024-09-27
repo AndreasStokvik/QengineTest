@@ -33,6 +33,11 @@ Window::~Window() {
     glfwTerminate();
 }
 
+GLFWwindow* Window::getWindow()
+{
+    return window;
+}
+
 // Initialize GLFW
 void Window::initGLFW() {
     if (!glfwInit()) {

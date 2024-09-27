@@ -38,6 +38,14 @@ void Camera::processKeyboard(CameraMovement direction, float deltaTime) {
         position += right * velocity;
         //std::cout << "Strafing Right: " << glm::to_string(position) << std::endl; // Debug output
     }
+    if (direction == UP) {
+        position += worldUp * velocity;
+        //std::cout << "Strafing Right: " << glm::to_string(position) << std::endl; // Debug output
+    }
+    if (direction == DOWN) {
+        position -= worldUp * velocity;
+        //std::cout << "Strafing Right: " << glm::to_string(position) << std::endl; // Debug output
+    }
 }
 
 // Processes input received from a mouse, adjusting the yaw and pitch

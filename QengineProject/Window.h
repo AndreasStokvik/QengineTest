@@ -23,6 +23,8 @@ public:
         glfwSetWindowUserPointer(window, pointer);
     }
 
+    GLFWwindow* getWindow();
+
 private:
     GLFWwindow* window;                                         // GLFW window handle
     void initGLFW();                                            // Initialize GLFW

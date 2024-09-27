@@ -22,9 +22,11 @@ float lastFrame = 0.0f;  // Time of the last frame
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));  // Start the camera 3 units away from the origin
 
 int main() {
+
     Window window(800, 600, "OpenGL Window");
     window.setUserPointer(&camera);
     window.setMouseCallback(mouse_callback);
+
 
     // Define 3D vertices for a cube
     float vertices[] = {
@@ -78,8 +80,10 @@ int main() {
     glEnableVertexAttribArray(0);  // Position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
+
     Shader shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
     shader.use();
+
 
     // Set up the 3D transformation matrices
     glm::mat4 model = glm::mat4(1.0f);  // Model matrix
@@ -132,6 +136,10 @@ void processInput(Window& window, Camera& camera, float deltaTime) {
         camera.processKeyboard(LEFT, deltaTime);
     if (window.isKeyPressed(GLFW_KEY_D))
         camera.processKeyboard(RIGHT, deltaTime);
+    if (window.isKeyPressed(GLFW_KEY_SPACE))
+        camera.processKeyboard(UP, deltaTime);
+    if (window.isKeyPressed(GLFW_KEY_LEFT_SHIFT))
+        camera.processKeyboard(DOWN, deltaTime);
 }
 
 // Mouse movement callback
