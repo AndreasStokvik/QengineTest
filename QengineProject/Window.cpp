@@ -16,6 +16,11 @@ Window::Window(int width, int height, const std::string& title) {
 
     // Make the window's context current
     glfwMakeContextCurrent(window);
+
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        std::cerr << "Failed to initialize GLAD" << std::endl;
+        exit(EXIT_FAILURE);
+    }
 }
 
 // Destructor
