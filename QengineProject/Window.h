@@ -25,9 +25,13 @@ public:
 
     GLFWwindow* getWindow();
 
+    float getAspectRatio() const;
 private:
     GLFWwindow* window;                                         // GLFW window handle
     void initGLFW();                                            // Initialize GLFW
+
+    int width;
+    int height;
 };
 
 #endif WINDOW_H

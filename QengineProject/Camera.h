@@ -46,9 +46,16 @@ public:
     // Processes input from the mouse scroll wheel (for zooming)
     void processMouseScroll(float yoffset);
 
+    // Handle mouse movement input
+    void handleMouseMovement(float xpos, float ypos);
 private:
     // Recalculate the camera's vectors (direction)
     void updateCameraVectors();
+
+    // Add mouse-specific members for handling the first frame and mouse position
+    float lastX = 800.0f / 2.0f;
+    float lastY = 600.0f / 2.0f;
+    bool firstMouse = true;
 };
 
 #endif // CAMERA_H

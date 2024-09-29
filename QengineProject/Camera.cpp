@@ -90,3 +90,20 @@ void Camera::updateCameraVectors() {
     right = glm::normalize(glm::cross(front, worldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down, which results in slower movement.
     up = glm::normalize(glm::cross(right, front));
 }
+
+void Camera::handleMouseMovement(float xpos, float ypos) {
+    if (firstMouse) {
+        lastX = xpos;
+        lastY = ypos;
+        firstMouse = false;
+    }
+
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+    lastX = xpos;
+    lastY = ypos;
+
+    // Use existing processMouseMovement method to update camera orientation
+    processMouseMovement(xoffset, yoffset);
+}

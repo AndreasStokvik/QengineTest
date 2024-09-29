@@ -2,7 +2,7 @@
 #include <iostream>
 
 // Constructor
-Window::Window(int width, int height, const std::string& title) {
+Window::Window(int width, int height, const std::string& title) : width(width), height(height) {
     // Initialize GLFW
     initGLFW();
 
@@ -64,4 +64,8 @@ bool Window::shouldClose() {
 bool Window::isKeyPressed(int key)
 {
     return glfwGetKey(window, key) == GLFW_PRESS;
+}
+
+float Window::getAspectRatio() const {
+    return static_cast<float>(width) / static_cast<float>(height);
 }
