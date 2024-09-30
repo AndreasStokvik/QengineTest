@@ -21,7 +21,7 @@ int main() {
     window.setMouseCallback(mouse_callback);
     InputManager inputManager;
 
-    Texture texture("textures/convert.gif");
+    Texture texture("textures/FptuEYKXEAAUVqr.png");
     texture.bind(0);
 
     Mesh cube = Mesh::createCube();
