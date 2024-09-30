@@ -21,7 +21,7 @@ int main() {
     window.setMouseCallback(mouse_callback);
     InputManager inputManager;
 
-    Texture texture("textures/twi.png");
+    Texture texture("textures/convert.gif");
     texture.bind(0);
 
     Mesh cube = Mesh::createCube();
@@ -49,6 +49,10 @@ int main() {
         shader.setUniform("projection", transform.projection);
 
         shader.use();
+        shader.setUniform("lightColor", glm::vec3(1.0f, 0.5f, 1.0f));
+        shader.setUniform("lightPos", glm::vec3(2.0f, 2.0f, 2.0f));
+        shader.setUniform("viewPos", camera.getPosition());
+
         cube.draw();
 
         window.swapBuffers();

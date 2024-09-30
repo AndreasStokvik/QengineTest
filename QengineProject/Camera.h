@@ -50,6 +50,8 @@ public:
     void handleMouseMovement(float xpos, float ypos);
 
     void toggleMouseControl();
+
+    glm::vec3 getPosition() const;
 private:
     // Recalculate the camera's vectors (direction)
     void updateCameraVectors();

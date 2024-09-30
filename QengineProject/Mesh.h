@@ -3,10 +3,16 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+struct Vertex {
+    glm::vec3 Position;     // Vertex position
+    glm::vec3 Normal;       // Vertex normal
+    glm::vec2 TexCoords;    // Texture coords
+};
+
 class Mesh {
 public:
     // Constructor
-    Mesh(const std::vector<float> vertices, const std::vector<unsigned int>& indices);
+    Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 
     // Destructor
     ~Mesh();
@@ -21,6 +27,7 @@ private:
 
     void setupMesh();
 
-    std::vector<float> vertices;
+    std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
+
 };

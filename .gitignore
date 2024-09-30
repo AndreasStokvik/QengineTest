@@ -10,6 +10,7 @@
 *.png
 *.jpg
 *.jpeg
+*.gif
 
 # User-specific folders
 .vscode/

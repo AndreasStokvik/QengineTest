@@ -22,6 +22,7 @@ Window::Window(int width, int height, const std::string& title) : width(width), 
         exit(EXIT_FAILURE);
     }
 
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);       // BG color
     glEnable(GL_DEPTH_TEST);
 
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);

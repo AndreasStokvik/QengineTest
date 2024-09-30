@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>  // Required for glm::value_ptr
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -57,6 +58,14 @@ void Shader::setUniform(const std::string& name, int value) {
 // Set a matrix uniform (like for transformation matrices)
 void Shader::setUniform(const std::string& name, const glm::mat4& matrix) {
     glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, &matrix[0][0]);
+}
+
+void Shader::setUniform(const std::string& name, const glm::vec3& vector) {
+    int location = glGetUniformLocation(programID, name.c_str());
+    if (location == -1) {
+        std::cerr << "Warning: uniform '" << name << "' not found or not used in the shader program!" << std::endl;
+    }
+    glUniform3fv(location, 1, glm::value_ptr(vector));
 }
 
 // Load the shader source code from a file

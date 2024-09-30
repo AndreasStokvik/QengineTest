@@ -116,3 +116,7 @@ void Camera::toggleMouseControl()
     // Flip mouseControl state
     mouseControl = !mouseControl;
 }
+
+glm::vec3 Camera::getPosition() const {
+    return position;
+}
