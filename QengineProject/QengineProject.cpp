@@ -18,6 +18,7 @@ int main() {
     Window window(800, 600, "OpenGL Window");
     window.setUserPointer(&camera);
     window.setMouseCallback(mouse_callback);
+    InputManager inputManager;
 
     Mesh cube = Mesh::createCube();
     Shader shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
@@ -33,7 +34,7 @@ int main() {
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
-        InputManager::processInput(window, camera, deltaTime);
+        inputManager.processInput(window, camera, deltaTime);
         transform.update(camera, window);
 
         shader.setUniform("model", transform.model);

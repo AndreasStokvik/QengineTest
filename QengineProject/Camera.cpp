@@ -12,6 +12,7 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
     this->yaw = yaw;
     this->pitch = pitch;
     updateCameraVectors();
+    mouseControl = true;
 }
 
 // Returns the view matrix calculated using the camera's position and orientation
@@ -105,5 +106,13 @@ void Camera::handleMouseMovement(float xpos, float ypos) {
     lastY = ypos;
 
     // Use existing processMouseMovement method to update camera orientation
-    processMouseMovement(xoffset, yoffset);
+    if (mouseControl) {
+        processMouseMovement(xoffset, yoffset);
+    }
+}
+
+void Camera::toggleMouseControl()
+{
+    // Flip mouseControl state
+    mouseControl = !mouseControl;
 }

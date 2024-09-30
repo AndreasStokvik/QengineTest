@@ -23,6 +23,7 @@ Window::Window(int width, int height, const std::string& title) : width(width), 
     }
 
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    cursorHidden = true;
     // Optionally set the cursor position to the center
     glfwSetCursorPos(window, width / 2, height / 2);
 }
@@ -68,4 +69,18 @@ bool Window::isKeyPressed(int key)
 
 float Window::getAspectRatio() const {
     return static_cast<float>(width) / static_cast<float>(height);
+}
+
+void Window::toggleCursor() {
+    if (cursorHidden) {
+        // Show cursor
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+    else {
+        // Hide cursor
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    }
+
+    // Flip the cursor state
+    cursorHidden = !cursorHidden;
 }

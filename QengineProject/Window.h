@@ -26,12 +26,16 @@ public:
     GLFWwindow* getWindow();
 
     float getAspectRatio() const;
+
+    void toggleCursor();
 private:
     GLFWwindow* window;                                         // GLFW window handle
     void initGLFW();                                            // Initialize GLFW
 
     int width;
     int height;
+
+    bool cursorHidden;
 };
 
 #endif WINDOW_H

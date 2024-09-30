@@ -48,6 +48,8 @@ public:
 
     // Handle mouse movement input
     void handleMouseMovement(float xpos, float ypos);
+
+    void toggleMouseControl();
 private:
     // Recalculate the camera's vectors (direction)
     void updateCameraVectors();
@@ -56,6 +58,7 @@ private:
     float lastX = 800.0f / 2.0f;
     float lastY = 600.0f / 2.0f;
     bool firstMouse = true;
+    bool mouseControl;
 };
 
 #endif // CAMERA_H
