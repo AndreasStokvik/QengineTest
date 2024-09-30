@@ -1,7 +1,7 @@
 #include "Mesh.h"
 
 // Constructor
-Mesh::Mesh(const std::vector<glm::vec3>& vertices, const std::vector<unsigned int>& indices)
+Mesh::Mesh(const std::vector<float> vertices, const std::vector<unsigned int>& indices)
     : vertices(vertices), indices(indices) {
     setupMesh();
 }
@@ -24,7 +24,7 @@ void Mesh::setupMesh() {
 
     // Load data into vertex buffer
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
 
     // Load data into element buffer
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -33,49 +33,53 @@ void Mesh::setupMesh() {
     // Set the vertex attribute pointers
     // Position attribute
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0); // 3 floats for position
+
+    // Texture coordinate attribute
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float))); // 2 floats for texture coords
 
     glBindVertexArray(0); // Unbind VAO
 }
 
 Mesh Mesh::createCube() {
-    std::vector<glm::vec3> vertices = {
-        // Cube vertices
+    std::vector<float> vertices = {
+        // positions          // texture coords
         // Front face
-        glm::vec3(-0.5f, -0.5f,  0.5f), // Bottom-left
-        glm::vec3(0.5f, -0.5f,  0.5f), // Bottom-right
-        glm::vec3(0.5f,  0.5f,  0.5f), // Top-right
-        glm::vec3(-0.5f,  0.5f,  0.5f), // Top-left
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // Bottom-left
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f, // Bottom-right
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // Top-right
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, // Top-left
 
         // Back face
-        glm::vec3(-0.5f, -0.5f, -0.5f), // Bottom-left
-        glm::vec3(0.5f, -0.5f, -0.5f), // Bottom-right
-        glm::vec3(0.5f,  0.5f, -0.5f), // Top-right
-        glm::vec3(-0.5f,  0.5f, -0.5f), // Top-left
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // Bottom-left
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f, // Bottom-right
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f, // Top-right
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // Top-left
 
         // Left face
-        glm::vec3(-0.5f,  0.5f,  0.5f), // Top-right (front)
-        glm::vec3(-0.5f,  0.5f, -0.5f), // Top-left (back)
-        glm::vec3(-0.5f, -0.5f, -0.5f), // Bottom-left (back)
-        glm::vec3(-0.5f, -0.5f,  0.5f), // Bottom-right (front)
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, // Top-right (front)
+        -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, // Top-left (back)
+        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, // Bottom-left (back)
+        -0.5f, -0.5f,  0.5f,  1.0f, 1.0f, // Bottom-right (front)
 
         // Right face
-        glm::vec3(0.5f,  0.5f,  0.5f),  // Top-left (front)
-        glm::vec3(0.5f,  0.5f, -0.5f),  // Top-right (back)
-        glm::vec3(0.5f, -0.5f, -0.5f),  // Bottom-right (back)
-        glm::vec3(0.5f, -0.5f,  0.5f),  // Bottom-left (front)
+         0.5f,  0.5f,  0.5f,  0.0f, 1.0f, // Top-left (front)
+         0.5f,  0.5f, -0.5f,  0.0f, 0.0f, // Top-right (back)
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f, // Bottom-right (back)
+         0.5f, -0.5f,  0.5f,  1.0f, 1.0f, // Bottom-left (front)
 
-        // Top face
-        glm::vec3(-0.5f,  0.5f,  0.5f), // Top-left (front)
-        glm::vec3(0.5f,  0.5f,  0.5f), // Top-right (front)
-        glm::vec3(0.5f,  0.5f, -0.5f), // Top-right (back)
-        glm::vec3(-0.5f,  0.5f, -0.5f), // Top-left (back)
+         // Top face
+         -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, // Top-left (front)
+          0.5f,  0.5f,  0.5f,  1.0f, 1.0f, // Top-right (front)
+          0.5f,  0.5f, -0.5f,  1.0f, 0.0f, // Top-right (back)
+         -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, // Top-left (back)
 
-        // Bottom face
-        glm::vec3(-0.5f, -0.5f,  0.5f), // Bottom-left (front)
-        glm::vec3(0.5f, -0.5f,  0.5f), // Bottom-right (front)
-        glm::vec3(0.5f, -0.5f, -0.5f), // Bottom-right (back)
-        glm::vec3(-0.5f, -0.5f, -0.5f)  // Bottom-left (back)
+         // Bottom face
+         -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, // Bottom-left (front)
+          0.5f, -0.5f,  0.5f,  1.0f, 1.0f, // Bottom-right (front)
+          0.5f, -0.5f, -0.5f,  1.0f, 0.0f, // Bottom-right (back)
+         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f  // Bottom-left (back)
     };
 
     std::vector<unsigned int> indices = {

@@ -7,6 +7,9 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.png
+*.jpg
+*.jpeg
 
 # User-specific folders
 .vscode/

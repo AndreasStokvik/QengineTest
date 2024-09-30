@@ -6,7 +6,7 @@
 class Mesh {
 public:
     // Constructor
-    Mesh(const std::vector<glm::vec3>& vertices, const std::vector<unsigned int>& indices);
+    Mesh(const std::vector<float> vertices, const std::vector<unsigned int>& indices);
 
     // Destructor
     ~Mesh();
@@ -21,6 +21,6 @@ private:
 
     void setupMesh();
 
-    std::vector<glm::vec3> vertices;
+    std::vector<float> vertices;
     std::vector<unsigned int> indices;
 };

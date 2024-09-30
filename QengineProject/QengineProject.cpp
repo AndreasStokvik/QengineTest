@@ -4,6 +4,7 @@
 #include "Mesh.h"
 #include "Transform.h"
 #include "InputManager.h"
+#include "Texture.h"
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));  // Start the camera 3 units away from the origin
 float deltaTime = 0.0f;
@@ -20,9 +21,15 @@ int main() {
     window.setMouseCallback(mouse_callback);
     InputManager inputManager;
 
+    Texture texture("textures/twi.png");
+    texture.bind(0);
+
     Mesh cube = Mesh::createCube();
     Shader shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
+    texture.bind();
     shader.use();
+    shader.setUniform("textureSampler", 0);
+
 
     Transform transform(camera, window);
 

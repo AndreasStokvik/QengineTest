@@ -11,6 +11,7 @@ public:
 
     void use() const;                                                        // Activate the shader program
     void setUniform(const std::string& name, float value);                    // Set float uniform
+    void setUniform(const std::string& name, int value);
     void setUniform(const std::string& name, const glm::mat4& matrix);        // Set matrix uniform
 
 private:
