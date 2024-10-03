@@ -13,6 +13,8 @@
 *.gif
 
 # User-specific folders
+.textures/
+.models/
 .libs/
 .vscode/
 .vs/
