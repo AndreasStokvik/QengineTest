@@ -13,6 +13,7 @@
 *.gif
 
 # User-specific folders
+.libs/
 .vscode/
 .vs/
 _ReSharper*/
