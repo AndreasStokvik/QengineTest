@@ -1,10 +1,10 @@
 #include "Window.h"
 #include "Shader.h"
 #include "Camera.h"
-#include "Mesh.h"
 #include "Transform.h"
 #include "InputManager.h"
 #include "Texture.h"
+#include "Model.h"
 
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));  // Start the camera 3 units away from the origin
 float deltaTime = 0.0f;
@@ -23,10 +23,10 @@ int main() {
 
     Texture texture("textures/FptuEYKXEAAUVqr.png");
     texture.bind(0);
+    
+    Model model("models/cube.obj");
 
-    Mesh cube = Mesh::createCube();
     Shader shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
-    texture.bind();
     shader.use();
     shader.setUniform("textureSampler", 0);
 
@@ -47,13 +47,14 @@ int main() {
         shader.setUniform("model", transform.model);
         shader.setUniform("view", transform.view);
         shader.setUniform("projection", transform.projection);
-
-        shader.use();
-        shader.setUniform("lightColor", glm::vec3(1.0f, 0.5f, 1.0f));
+        
+        shader.setUniform("useTexture", true); // Enable Texture
+        shader.setUniform("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
         shader.setUniform("lightPos", glm::vec3(2.0f, 2.0f, 2.0f));
         shader.setUniform("viewPos", camera.getPosition());
+        shader.use();
 
-        cube.draw();
+        model.draw(shader);
 
         window.swapBuffers();
     }

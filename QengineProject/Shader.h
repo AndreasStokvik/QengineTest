@@ -15,6 +15,8 @@ public:
     void setUniform(const std::string& name, const glm::mat4& matrix);        // Set matrix uniform
     void setUniform(const std::string& name, const glm::vec3& vector);        // Set vec3 uniform
 
+    void setInt(const std::string& name, int value);
+
 private:
     unsigned int programID;                                                   // The OpenGL shader program ID
 

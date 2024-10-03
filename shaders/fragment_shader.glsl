@@ -10,6 +10,7 @@ uniform sampler2D textureSampler; // Texture sampler
 uniform vec3 lightPos; // Light position uniform
 uniform vec3 lightColor; // Light color uniform
 uniform vec3 viewPos; // Camera position uniform
+uniform bool useTexture; // Boolean to check if a texture is used
 
 void main() {
     // Ambient lighting
@@ -30,7 +31,7 @@ void main() {
     vec3 specular = specularStrength * spec * lightColor;
 
     // Combine results
-    vec3 textureColor = texture(textureSampler, TexCoords).rgb; // Sample the texture
+    vec3 textureColor = useTexture ? texture(textureSampler, TexCoords).rgb : vec3(1.0); // Default color is white
     vec3 result = (ambient + diffuse + specular) * textureColor; // Combine texture with lighting
     FragColor = vec4(result, 1.0); // Output final color
 }

@@ -1,8 +1,8 @@
 #include "Mesh.h"
 
 // Constructor
-Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
-    : vertices(vertices), indices(indices) {
+Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<TextureData>& textures)
+    : vertices(vertices), indices(indices), textures(textures) {
     setupMesh();
 }
 
@@ -45,6 +45,31 @@ void Mesh::setupMesh() {
     glBindVertexArray(0); // Unbind VAO
 }
 
+// Render the mesh
+void Mesh::draw(Shader& shader) {
+    // Bind the shader before drawing
+    shader.use();
+
+    // Bind textures before drawing
+    for (unsigned int i = 0; i < textures.size(); i++) {
+        glActiveTexture(GL_TEXTURE0 + i); // Activate the proper texture unit before binding
+        glBindTexture(GL_TEXTURE_2D, textures[i].id);
+        shader.setInt("texture" + std::to_string(i), i);
+    }
+
+    // Draw the mesh
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
+
+    // Unbind textures after drawing
+    for (unsigned int i = 0; i < textures.size(); i++) {
+        glActiveTexture(GL_TEXTURE0 + i); // Reset texture unit
+        glBindTexture(GL_TEXTURE_2D, 0);  // Unbind texture
+    }
+}
+
+// Factory method for creating a cube (same as before)
 Mesh Mesh::createCube() {
     std::vector<Vertex> vertices = {
         // Positions                // Normals              // Texture Coords
@@ -79,28 +104,28 @@ Mesh Mesh::createCube() {
         { glm::vec3(-0.5f,  0.5f, -0.5f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
 
         // Bottom face
-        { glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec2(0.0f, 1.0f) },
-        { glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec2(1.0f, 1.0f) },
-        { glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec2(1.0f, 0.0f) },
-        { glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec2(0.0f, 0.0f) }
+        { glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec2(0.0f, 0.0f) },
+        { glm::vec3(0.5f, -0.5f,  0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec2(1.0f, 0.0f) },
+        { glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec2(1.0f, 1.0f) },
+        { glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec2(0.0f, 1.0f) }
     };
 
     std::vector<unsigned int> indices = {
-        // Cube indices
-        0, 1, 2, 2, 3, 0,   // Front face
-        4, 5, 6, 6, 7, 4,   // Back face
-        8, 9, 10, 10, 11, 8, // Left face
-        12, 13, 14, 14, 15, 12, // Right face
-        16, 17, 18, 18, 19, 16, // Top face
-        20, 21, 22, 22, 23, 20  // Bottom face
+        // Front face
+        0, 1, 2, 2, 3, 0,
+        // Back face
+        4, 5, 6, 6, 7, 4,
+        // Left face
+        8, 9, 10, 10, 11, 8,
+        // Right face
+        12, 13, 14, 14, 15, 12,
+        // Top face
+        16, 17, 18, 18, 19, 16,
+        // Bottom face
+        20, 21, 22, 22, 23, 20
     };
 
-    return Mesh(vertices, indices);
-}
+    std::vector<TextureData> textures; // Assuming you'll fill this with your textures
 
-// Render the mesh (draw call)
-void Mesh::draw() {
-    glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
-    glBindVertexArray(0);
+    return Mesh(vertices, indices, textures);
 }

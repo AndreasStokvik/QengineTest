@@ -68,6 +68,11 @@ void Shader::setUniform(const std::string& name, const glm::vec3& vector) {
     glUniform3fv(location, 1, glm::value_ptr(vector));
 }
 
+// Set an integer uniform in the shader (for texture samplers)
+void Shader::setInt(const std::string& name, int value) {
+    glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
+}
+
 // Load the shader source code from a file
 std::string Shader::loadShaderSource(const std::string& path) {
     std::ifstream shaderFile;

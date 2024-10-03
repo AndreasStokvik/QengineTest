@@ -24,6 +24,8 @@ Window::Window(int width, int height, const std::string& title) : width(width), 
 
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);       // BG color
     glEnable(GL_DEPTH_TEST);
+    //glDisable(GL_CULL_FACE);                    // Dissable Culling
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);  // Wireframe mode
 
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     cursorHidden = true;
