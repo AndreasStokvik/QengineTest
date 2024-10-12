@@ -35,6 +35,8 @@ public:
     // Draw function
     void draw(Shader& shader);
 
+    std::vector<unsigned int> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
+
 private:
     // Process node
     void processNode(aiNode* node, const aiScene* scene);
@@ -45,7 +47,8 @@ private:
     // Member variables
     std::vector<Vertex> vertices;           // Stores vertices
     std::vector<unsigned int> indices;      // Stores indices
-    std::string directory;                   // Model directory
+    std::string directory;                  // Model directory
+    std::vector<unsigned int> textures;     // Stores texture
 };
 
 #endif // MODEL_H

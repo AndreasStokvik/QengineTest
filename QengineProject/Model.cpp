@@ -76,6 +76,7 @@ unsigned int TextureFromFile(const char* path, const std::string& directory) {
 void Model::processMesh(aiMesh* mesh, const aiScene* scene) {
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
+    std::vector<unsigned int> meshTextures;
 
     // Process vertices
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
@@ -103,8 +104,8 @@ void Model::processMesh(aiMesh* mesh, const aiScene* scene) {
         // Texture coordinates
         if (mesh->mTextureCoords[0]) {
             vertex.TexCoords = glm::vec2(
-                mesh->mTextureCoords[0][i].y,
-                mesh->mTextureCoords[0][i].x
+                mesh->mTextureCoords[0][i].x,
+                mesh->mTextureCoords[0][i].y
             );
         }
         else {
@@ -122,13 +123,26 @@ void Model::processMesh(aiMesh* mesh, const aiScene* scene) {
         }
     }
 
-    // Store vertices and indices directly in the Model class (e.g., in a member variable)
+    // Process material textures
+    if (mesh->mMaterialIndex >= 0) {
+        aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+        std::vector<unsigned int> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+    }
+
+    // Store vertices and indices
     this->vertices.insert(this->vertices.end(), vertices.begin(), vertices.end());
     this->indices.insert(this->indices.end(), indices.begin(), indices.end());
 }
 
 // Draw function
 void Model::draw(Shader& shader) {
+    // Bind textures
+    for (unsigned int i = 0; i < textures.size(); i++) {
+        glActiveTexture(GL_TEXTURE0 + i); // Activate the proper texture unit
+        glBindTexture(GL_TEXTURE_2D, textures[i]);
+    }
+
     // Bind the VAO (Vertex Array Object) and draw the model
     unsigned int VAO, VBO, EBO;
 
@@ -165,4 +179,15 @@ void Model::draw(Shader& shader) {
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
     glDeleteVertexArrays(1, &VAO);
+}
+
+std::vector<unsigned int> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) {
+    std::vector<unsigned int> textures;
+    for (unsigned int i = 0; i < mat->GetTextureCount(type); i++) {
+        aiString str;
+        mat->GetTexture(type, i, &str);
+        unsigned int textureID = TextureFromFile(str.C_Str(), directory);
+        textures.push_back(textureID);
+    }
+    return textures;
 }

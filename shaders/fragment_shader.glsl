@@ -30,8 +30,11 @@ void main() {
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     vec3 specular = specularStrength * spec * lightColor;
 
-    // Combine results
-    vec3 textureColor = useTexture ? texture(textureSampler, TexCoords).rgb : vec3(1.0); // Default color is white
-    vec3 result = (ambient + diffuse + specular) * textureColor; // Combine texture with lighting
-    FragColor = vec4(result, 1.0); // Output final color
+    vec3 lighting = (ambient + diffuse + specular);
+
+    if (useTexture) {
+        FragColor = texture(textureSampler, TexCoords) * vec4(lighting, 1.0);
+    } else {
+        FragColor = vec4(lighting, 1.0);
+    }
 }

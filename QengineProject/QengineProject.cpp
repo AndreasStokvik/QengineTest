@@ -21,10 +21,12 @@ int main() {
     window.setMouseCallback(mouse_callback);
     InputManager inputManager;
 
-    Texture texture("textures/FptuEYKXEAAUVqr.png");
-    texture.bind(0);
+    glEnable(GL_DEPTH_TEST);
+
+    /*Texture texture("models/dice.png");
+    texture.bind(0);*/
     
-    Model model("models/cube.obj");
+    Model model("models/cube2.obj");
 
     Shader shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
     shader.use();
