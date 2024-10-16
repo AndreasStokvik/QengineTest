@@ -108,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>K:\VSCode2022\GitRepos\QengineTest\QengineTest\libs\assimp\include;K:\VSCode2022\GitRepos\assimp\include;$(SolutionDir)\libs\glad\include;K:\VSCode2022\GitRepos\QengineTest\QengineTest\QengineProject\libs\glad\include\glad;K:\VSCode2022\openGL\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>K:\VSCode2022\GitRepos\QengineTest\QengineTest\libs\imgui;K:\VSCode2022\GitRepos\QengineTest\QengineTest\libs\assimp\include;K:\VSCode2022\GitRepos\assimp\include;$(SolutionDir)\libs\glad\include;K:\VSCode2022\GitRepos\QengineTest\QengineTest\QengineProject\libs\glad\include\glad;K:\VSCode2022\openGL\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,18 +137,36 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\libs\glad\src\glad.c" />
+    <ClCompile Include="..\libs\imgui\imgui.cpp" />
+    <ClCompile Include="..\libs\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\libs\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\libs\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\libs\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\libs\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ImGuiManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="QengineProject.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\libs\imgui\imconfig.h" />
+    <ClInclude Include="..\libs\imgui\imgui.h" />
+    <ClInclude Include="..\libs\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="..\libs\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="..\libs\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="..\libs\imgui\imgui_internal.h" />
+    <ClInclude Include="..\libs\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\libs\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\libs\imgui\imstb_truetype.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />

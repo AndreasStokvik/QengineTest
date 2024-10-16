@@ -5,8 +5,9 @@
 #include "InputManager.h"
 #include "Texture.h"
 #include "Model.h"
+#include "ImGuiManager.h"
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));  // Start the camera 3 units away from the origin
+Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
@@ -20,20 +21,18 @@ int main() {
     window.setUserPointer(&camera);
     window.setMouseCallback(mouse_callback);
     InputManager inputManager;
-
-    glEnable(GL_DEPTH_TEST);
-
-    /*Texture texture("models/dice.png");
-    texture.bind(0);*/
+    ImGuiManager imgui(window);
     
     Model model("models/cube2.obj");
+
+    Transform transform(camera, window);
 
     Shader shader("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl");
     shader.use();
     shader.setUniform("textureSampler", 0);
-
-
-    Transform transform(camera, window);
+    shader.setUniform("model", transform.model);
+    shader.setUniform("view", transform.view);
+    shader.setUniform("projection", transform.projection);
 
     while (!window.shouldClose()) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -58,8 +57,12 @@ int main() {
 
         model.draw(shader);
 
+        imgui.BasicText("Aaron earned", "a iron urn");
+
         window.swapBuffers();
     }
 
+    imgui.shutdown();
+    glfwTerminate();
     return 0;
 }
