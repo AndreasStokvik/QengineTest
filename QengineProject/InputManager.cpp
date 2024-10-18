@@ -6,8 +6,10 @@ struct InputCameraContext {
     std::shared_ptr<Camera> camera;
 };
 
-InputManager::InputManager() : lastX(400), lastY(300), firstMouse(true) {
+InputManager::InputManager(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera)
+    : lastX(400), lastY(300), firstMouse(true) {
     keyStates.fill(false);
+    setMouseCallback(window, camera);
 }
 
 void InputManager::processInput(const std::shared_ptr <Window>& window, const std::shared_ptr<Camera>& camera, float deltaTime) {

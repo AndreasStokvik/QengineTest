@@ -6,7 +6,7 @@
 #include <iostream>
 
 // Constructor: Load, compile, and link shaders
-Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
+Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, std::shared_ptr<Camera>& camera) {
     // Load shader source code
     std::string vertexCode = loadShaderSource(vertexPath);
     std::string fragmentCode = loadShaderSource(fragmentPath);
@@ -33,6 +33,8 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath) {
     // Clean up by deleting the shaders (they are linked now, so not needed)
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+    use();
+    setLightingUniforms(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(2.0f, 2.0f, 2.0f), camera->getPosition());
 }
 
 // Destructor: Clean up by deleting the shader program

@@ -1,12 +1,15 @@
 #ifndef SHADER_H
 #define SHADER_H
 
+#include "Camera.h"
+
 #include <string>
 #include <glm/glm.hpp> // For setting matrix uniforms
+#include <memory>
 
 class Shader {
 public:
-    Shader(const std::string& vertexPath, const std::string& fragmentPath);  // Constructor
+    Shader(const std::string& vertexPath, const std::string& fragmentPath, std::shared_ptr<Camera>& camera);  // Constructor
     ~Shader();                                                               // Destructor
 
     void use() const;                                                         // Activate the shader program

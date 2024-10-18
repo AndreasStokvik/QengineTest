@@ -8,7 +8,7 @@
 
 class InputManager {
 public:
-    InputManager();
+    InputManager(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera);
 
     void processInput(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera, float deltaTime);
     bool isKeyPressedOnce(const std::shared_ptr<Window>& window, int key);
