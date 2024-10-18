@@ -1,6 +1,6 @@
 #include "ImGuiManager.h"
 
-ImGuiManager::ImGuiManager(Window& window)
+ImGuiManager::ImGuiManager(const std::shared_ptr<Window>& window)
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -10,7 +10,7 @@ ImGuiManager::ImGuiManager(Window& window)
     ImGui::StyleColorsDark();
 
     // Setup Platform/Renderer bindings
-    ImGui_ImplGlfw_InitForOpenGL(window.getWindow(), true); // Use your actual window variable here
+    ImGui_ImplGlfw_InitForOpenGL(window->getWindow(), true);
     ImGui_ImplOpenGL3_Init("#version 330");
 }
 

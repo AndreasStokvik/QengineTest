@@ -136,7 +136,7 @@ void Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 }
 
 // Draw function
-void Model::draw(Shader& shader) {
+void Model::draw(const std::shared_ptr<Shader>& shader) {
     // Bind textures
     for (unsigned int i = 0; i < textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i); // Activate the proper texture unit

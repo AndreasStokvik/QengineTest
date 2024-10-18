@@ -32,7 +32,7 @@ void main() {
 
     vec3 lighting = (ambient + diffuse + specular);
 
-    if (useTexture) {
+    if (textureSize(textureSampler, 0).x > 0) {
         FragColor = texture(textureSampler, TexCoords) * vec4(lighting, 1.0);
     } else {
         FragColor = vec4(lighting, 1.0);

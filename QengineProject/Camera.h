@@ -1,8 +1,11 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#include "Window.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <memory>
 
 enum CameraMovement {
     FORWARD,
@@ -46,11 +49,6 @@ public:
     // Processes input from the mouse scroll wheel (for zooming)
     void processMouseScroll(float yoffset);
 
-    // Handle mouse movement input
-    void handleMouseMovement(float xpos, float ypos);
-
-    void toggleMouseControl();
-
     glm::vec3 getPosition() const;
 private:
     // Recalculate the camera's vectors (direction)
@@ -60,7 +58,6 @@ private:
     float lastX = 800.0f / 2.0f;
     float lastY = 600.0f / 2.0f;
     bool firstMouse = true;
-    bool mouseControl;
 };
 
 #endif // CAMERA_H

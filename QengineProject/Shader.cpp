@@ -73,6 +73,13 @@ void Shader::setInt(const std::string& name, int value) {
     glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
 }
 
+void Shader::setLightingUniforms(const glm::vec3& lightColor, const glm::vec3& lightPos, const glm::vec3& viewPos)
+{
+    setUniform("lightColor", lightColor);
+    setUniform("lightPos", lightPos);
+    setUniform("viewPos", viewPos);
+}
+
 // Load the shader source code from a file
 std::string Shader::loadShaderSource(const std::string& path) {
     std::ifstream shaderFile;

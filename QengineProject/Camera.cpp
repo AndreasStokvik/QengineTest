@@ -12,7 +12,6 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
     this->yaw = yaw;
     this->pitch = pitch;
     updateCameraVectors();
-    mouseControl = true;
 }
 
 // Returns the view matrix calculated using the camera's position and orientation
@@ -78,43 +77,15 @@ void Camera::processMouseScroll(float yoffset) {
         zoom = 45.0f;
 }
 
-// Recalculates the camera's front, right, and up vectors from the Euler angles
 void Camera::updateCameraVectors() {
-    // Calculate the new front vector
     glm::vec3 newFront;
     newFront.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
     newFront.y = sin(glm::radians(pitch));
     newFront.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
     front = glm::normalize(newFront);
 
-    // Recalculate right and up vectors
-    right = glm::normalize(glm::cross(front, worldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down, which results in slower movement.
+    right = glm::normalize(glm::cross(front, worldUp));
     up = glm::normalize(glm::cross(right, front));
-}
-
-void Camera::handleMouseMovement(float xpos, float ypos) {
-    if (firstMouse) {
-        lastX = xpos;
-        lastY = ypos;
-        firstMouse = false;
-    }
-
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-
-    lastX = xpos;
-    lastY = ypos;
-
-    // Use existing processMouseMovement method to update camera orientation
-    if (mouseControl) {
-        processMouseMovement(xoffset, yoffset);
-    }
-}
-
-void Camera::toggleMouseControl()
-{
-    // Flip mouseControl state
-    mouseControl = !mouseControl;
 }
 
 glm::vec3 Camera::getPosition() const {

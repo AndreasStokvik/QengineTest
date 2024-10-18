@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -33,7 +34,7 @@ public:
     void loadModel(const std::string& path);
 
     // Draw function
-    void draw(Shader& shader);
+    void draw(const std::shared_ptr<Shader>& shader);
 
     std::vector<unsigned int> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 
