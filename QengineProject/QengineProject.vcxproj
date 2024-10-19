@@ -109,6 +109,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>K:\VSCode2022\GitRepos\QengineTest\QengineTest\libs\imgui;K:\VSCode2022\GitRepos\QengineTest\QengineTest\libs\assimp\include;K:\VSCode2022\GitRepos\assimp\include;$(SolutionDir)\libs\glad\include;K:\VSCode2022\GitRepos\QengineTest\QengineTest\QengineProject\libs\glad\include\glad;K:\VSCode2022\openGL\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

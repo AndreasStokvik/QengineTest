@@ -6,7 +6,7 @@ void GameManager::init() {
     camera = std::make_shared<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
     inputManager = std::make_shared<InputManager>(window, camera);
     imguiManager = std::make_shared<ImGuiManager>(window);
-    model = std::make_shared<Model>("models/cube2.obj");
+    model = std::make_shared<Model>("models/environment.obj");
     shader = std::make_shared<Shader>("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl", camera);
     transform = std::make_shared<Transform>(camera, window, shader);
 
@@ -28,17 +28,20 @@ void GameManager::run()
     shutdown();
 }
 
-void GameManager::processInput(){inputManager->processInput(window, camera);}
-void GameManager::update() {transform->update(camera, window, shader);}
+void GameManager::update() {
+    transform->update(camera, window, shader);
+}
 
 void GameManager::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shader->use();
     model->draw(shader);
-    imguiManager->BasicText("Title", "text");
+    //imguiManager->BasicText("Title", "text");
 }
 
 void GameManager::shutdown() {
     imguiManager->shutdown();
     glfwTerminate();
 }
+
+void GameManager::processInput() { inputManager->processInput(window, camera); }

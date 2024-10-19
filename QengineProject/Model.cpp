@@ -1,5 +1,7 @@
-#include <iostream>
 #include "Model.h"
+
+#include <iostream>
+#include <filesystem>
 #include "stb_image.h"
 
 Model::Model(const std::string& path) {
@@ -8,11 +10,18 @@ Model::Model(const std::string& path) {
 
 // Load model function
 void Model::loadModel(const std::string& path) {
+    if (!std::filesystem::exists(path)) {
+        std::cerr << "ERROR::MODEL::File not found: " << path << std::endl;
+        std::exit(EXIT_FAILURE);
+        return;
+    }
+
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         std::cerr << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
+        std::exit(EXIT_FAILURE);
         return;
     }
 
@@ -137,29 +146,31 @@ void Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 // Draw function
 void Model::draw(const std::shared_ptr<Shader>& shader) {
     // Bind textures
-    for (unsigned int i = 0; i < textures.size(); i++) {
-        glActiveTexture(GL_TEXTURE0 + i); // Activate the proper texture unit
-        glBindTexture(GL_TEXTURE_2D, textures[i]);
+    bool hasTextures = !textures.empty();
+    shader->setUniform("hasTexture", hasTextures);
+
+    if (hasTextures) {
+        // Bind textures if any
+        for (unsigned int i = 0; i < textures.size(); i++) {
+            glActiveTexture(GL_TEXTURE0 + i);
+            glBindTexture(GL_TEXTURE_2D, textures[i]);
+        }
     }
 
-    // Bind the VAO (Vertex Array Object) and draw the model
+    // Bind VAO and draw the model
     unsigned int VAO, VBO, EBO;
 
-    // Generate and bind the VAO
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
-    // Generate and bind the VBO
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
-    // Generate and bind the EBO
     glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
 
-    // Set vertex attribute pointers
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
     glEnableVertexAttribArray(0);
 
@@ -169,7 +180,6 @@ void Model::draw(const std::shared_ptr<Shader>& shader) {
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
     glEnableVertexAttribArray(2);
 
-    // Draw the model
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 
     // Cleanup

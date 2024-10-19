@@ -9,11 +9,12 @@ in vec2 TexCoords;                  // Texture coordinates from vertex shader
 uniform sampler2D textureSampler;   // Texture sampler
 uniform vec3 lightPos;              // Light position uniform
 uniform vec3 lightColor;            // Light color uniform
-uniform vec3 viewPos;                // Camera position uniform
+uniform vec3 viewPos;               // Camera position uniform
+uniform bool hasTexture;            // Texture presence uniform
 
 void main() {
     // Ambient lighting
-    float ambientStrength = 0.1;
+    float ambientStrength = 0.5;
     vec3 ambient = ambientStrength * lightColor;
 
     // Diffuse lighting
@@ -29,11 +30,14 @@ void main() {
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     vec3 specular = specularStrength * spec * lightColor;
 
-    vec3 lighting = (ambient + diffuse + specular);
+    // Combine lighting components
+    vec3 lighting = ambient + diffuse + specular;
 
-    if (textureSize(textureSampler, 0).x > 0) {
+    if (hasTexture) {
+        // Multiply texture color with the calculated lighting
         FragColor = texture(textureSampler, TexCoords) * vec4(lighting, 1.0);
     } else {
+        // Render using only the lighting calculation if no texture is present
         FragColor = vec4(lighting, 1.0);
     }
 }
