@@ -6,10 +6,8 @@ ImGuiManager::ImGuiManager(const std::shared_ptr<Window>& window)
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-    // Setup Dear ImGui style
     ImGui::StyleColorsDark();
 
-    // Setup Platform/Renderer bindings
     ImGui_ImplGlfw_InitForOpenGL(window->getWindow(), true);
     ImGui_ImplOpenGL3_Init("#version 330");
 }
@@ -20,12 +18,10 @@ void ImGuiManager::BasicText(const std::string& stringA, const std::string& stri
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    // Your UI code here
     ImGui::Begin(stringA.c_str());
     ImGui::Text("%s", stringB.c_str());
     ImGui::End();
 
-    // Render ImGui
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }

@@ -28,21 +28,13 @@ void GameManager::run()
     shutdown();
 }
 
-void GameManager::processInput()
-{
-    inputManager->processInput(window, camera);
-}
-
-void GameManager::update() {
-    transform->update(camera, window, shader);
-}
+void GameManager::processInput(){inputManager->processInput(window, camera);}
+void GameManager::update() {transform->update(camera, window, shader);}
 
 void GameManager::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     shader->use();
     model->draw(shader);
-
     imguiManager->BasicText("Title", "text");
 }
 

@@ -7,12 +7,11 @@
 
 class Window {
 public:
-    Window(int width, int height, const std::string& title);    // Constructor
-    ~Window();                                                  // Destructor
+    Window(int width, int height, const std::string& title);
+    ~Window();
 
-    void swapBuffers();                                         // Swap front and back buffers
-    bool shouldClose();                                         // Check if window should close
-
+    void swapBuffers();
+    bool shouldClose();
     bool isKeyPressed(int key);
 
     // Set the mouse callback
@@ -29,8 +28,8 @@ public:
 
     void toggleCursor();
 private:
-    GLFWwindow* window;                                         // GLFW window handle
-    void initGLFW();                                            // Initialize GLFW
+    GLFWwindow* window;
+    void initGLFW();
 
     int width;
     int height;

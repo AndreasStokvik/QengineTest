@@ -2,7 +2,6 @@
 #include "Model.h"
 #include "stb_image.h"
 
-// Constructor
 Model::Model(const std::string& path) {
     loadModel(path);
 }

@@ -4,22 +4,19 @@
 #include "Camera.h"
 
 #include <string>
-#include <glm/glm.hpp> // For setting matrix uniforms
+#include <glm/glm.hpp>
 #include <memory>
 
 class Shader {
 public:
-    Shader(const std::string& vertexPath, const std::string& fragmentPath, std::shared_ptr<Camera>& camera);  // Constructor
-    ~Shader();                                                               // Destructor
+    Shader(const std::string& vertexPath, const std::string& fragmentPath, std::shared_ptr<Camera>& camera);
+    ~Shader();
 
     void use() const;                                                         // Activate the shader program
     void setUniform(const std::string& name, float value);                    // Set float uniform
-    void setUniform(const std::string& name, int value);
+    void setUniform(const std::string& name, int value);                      // Set int uniform
     void setUniform(const std::string& name, const glm::mat4& matrix);        // Set matrix uniform
     void setUniform(const std::string& name, const glm::vec3& vector);        // Set vec3 uniform
-
-    void setInt(const std::string& name, int value);
-
     void setLightingUniforms(const glm::vec3& lightColor, const glm::vec3& lightPos, const glm::vec3& viewPos);
 
 private:

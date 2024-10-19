@@ -12,8 +12,7 @@ struct Vertex {
     glm::vec2 TexCoords;    // Texture coordinates
 };
 
-// Rename Texture struct to TextureData
-struct TextureData { // Change the name here
+struct TextureData {
     unsigned int id;
     std::string type;
     std::string path;
@@ -21,24 +20,21 @@ struct TextureData { // Change the name here
 
 class Mesh {
 public:
-    // Constructor
-    Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<TextureData>& textures); // Change type here
+    Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<TextureData>& textures);
 
-    // Destructor
     ~Mesh();
 
     // Static factory method
     static Mesh createCube();
 
-    // Render the mesh
     void draw(Shader& shader);
 
 private:
-    GLuint VAO, VBO, EBO; // OpenGL object IDs
+    GLuint VAO, VBO, EBO;
 
     void setupMesh();
 
     std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
-    std::vector<TextureData> textures; // Change type here
+    std::vector<TextureData> textures;
 };

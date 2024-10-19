@@ -5,17 +5,12 @@
 
 Texture::Texture(const std::string& path)
     : textureID(0), width(0), height(0), nrChannels(0), filePath(path) {
-    // Load the texture
     loadTexture(path);
 }
-
-Texture::~Texture() {
-    glDeleteTextures(1, &textureID);  // Clean up the texture from OpenGL
-}
+Texture::~Texture() {glDeleteTextures(1, &textureID);}
 
 void Texture::loadTexture(const std::string& path) {
-    // Load the texture data
-    stbi_set_flip_vertically_on_load(true);  // Flip the image as OpenGL expects the bottom-left corner as the origin
+    stbi_set_flip_vertically_on_load(true);  // Flip the image
     unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 
     if (data) {
@@ -34,7 +29,7 @@ void Texture::loadTexture(const std::string& path) {
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
-        // Set texture parameters
+        // Texture parameters
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);

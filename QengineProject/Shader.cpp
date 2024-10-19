@@ -1,21 +1,17 @@
 #include "Shader.h"
 #include <glad/glad.h>
-#include <glm/gtc/type_ptr.hpp>  // Required for glm::value_ptr
+#include <glm/gtc/type_ptr.hpp>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
-// Constructor: Load, compile, and link shaders
 Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, std::shared_ptr<Camera>& camera) {
-    // Load shader source code
     std::string vertexCode = loadShaderSource(vertexPath);
     std::string fragmentCode = loadShaderSource(fragmentPath);
 
-    // Compile vertex and fragment shaders
     unsigned int vertexShader = compileShader(GL_VERTEX_SHADER, vertexCode);
     unsigned int fragmentShader = compileShader(GL_FRAGMENT_SHADER, fragmentCode);
 
-    // Create the shader program and link the shaders
     programID = glCreateProgram();
     glAttachShader(programID, vertexShader);
     glAttachShader(programID, fragmentShader);
@@ -30,38 +26,21 @@ Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, s
         std::cerr << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
     }
 
-    // Clean up by deleting the shaders (they are linked now, so not needed)
+    // Clean up
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     use();
     setLightingUniforms(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(2.0f, 2.0f, 2.0f), camera->getPosition());
 }
 
-// Destructor: Clean up by deleting the shader program
-Shader::~Shader() {
-    glDeleteProgram(programID);
-}
+Shader::~Shader(){glDeleteProgram(programID);}
 
-// Activate the shader program
-void Shader::use() const {
-    glUseProgram(programID);
-}
+void Shader::use() const {glUseProgram(programID);}
 
-// Set a float uniform in the shader
-void Shader::setUniform(const std::string& name, float value) {
-    glUniform1f(glGetUniformLocation(programID, name.c_str()), value);
-}
-
-// Set an integer uniform in the shader (for texture samplers)
-void Shader::setUniform(const std::string& name, int value) {
-    glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
-}
-
-// Set a matrix uniform (like for transformation matrices)
-void Shader::setUniform(const std::string& name, const glm::mat4& matrix) {
-    glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, &matrix[0][0]);
-}
-
+// Setting different uniforms in the shader
+void Shader::setUniform(const std::string& name, float value){glUniform1f(glGetUniformLocation(programID, name.c_str()), value);}
+void Shader::setUniform(const std::string& name, int value){glUniform1i(glGetUniformLocation(programID, name.c_str()), value);}
+void Shader::setUniform(const std::string& name, const glm::mat4& matrix) {glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, &matrix[0][0]);}
 void Shader::setUniform(const std::string& name, const glm::vec3& vector) {
     int location = glGetUniformLocation(programID, name.c_str());
     if (location == -1) {
@@ -69,12 +48,6 @@ void Shader::setUniform(const std::string& name, const glm::vec3& vector) {
     }
     glUniform3fv(location, 1, glm::value_ptr(vector));
 }
-
-// Set an integer uniform in the shader (for texture samplers)
-void Shader::setInt(const std::string& name, int value) {
-    glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
-}
-
 void Shader::setLightingUniforms(const glm::vec3& lightColor, const glm::vec3& lightPos, const glm::vec3& viewPos)
 {
     setUniform("lightColor", lightColor);

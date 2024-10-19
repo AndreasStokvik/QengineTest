@@ -30,28 +30,27 @@ void InputManager::processInput(const std::shared_ptr <Window>& window, const st
     if (isKeyPressed(window, GLFW_KEY_LEFT_SHIFT))
         camera->processKeyboard(DOWN, deltaTime);
 
-    // Toggle cursor and camera movement with Escape key (once)
+    // Toggle cursor and camera movement with Escape key
     if (isKeyPressedOnce(window, GLFW_KEY_ESCAPE)) {
         window->toggleCursor();
         toggleMouseControl();
     }
 }
 
-// Check if a key was pressed just once
+// Check if a key was pressed just once (spam protection)
 bool InputManager::isKeyPressedOnce(const std::shared_ptr <Window>& window, int key) {
     if (glfwGetKey(window->getWindow(), key) == GLFW_PRESS) {
         if (!keyStates[key]) {
-            keyStates[key] = true;  // Mark key as pressed
+            keyStates[key] = true;
             return true;
         }
     }
     else if (glfwGetKey(window->getWindow(), key) == GLFW_RELEASE) {
-        keyStates[key] = false;  // Reset state when key is released
+        keyStates[key] = false;
     }
     return false;
 }
 
-// Standard key press check (for continuous actions)
 bool InputManager::isKeyPressed(const std::shared_ptr <Window>& window, int key) {
     return glfwGetKey(window->getWindow(), key) == GLFW_PRESS;
 }

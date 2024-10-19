@@ -2,15 +2,14 @@
 
 out vec4 FragColor;
 
-in vec3 Normal;  // Normal vector from vertex shader
-in vec3 FragPos; // Fragment position from vertex shader
-in vec2 TexCoords; // Texture coordinates from vertex shader
+in vec3 Normal;                     // Normal vector from vertex shader
+in vec3 FragPos;                    // Fragment position from vertex shader
+in vec2 TexCoords;                  // Texture coordinates from vertex shader
 
-uniform sampler2D textureSampler; // Texture sampler
-uniform vec3 lightPos; // Light position uniform
-uniform vec3 lightColor; // Light color uniform
-uniform vec3 viewPos; // Camera position uniform
-uniform bool useTexture; // Boolean to check if a texture is used
+uniform sampler2D textureSampler;   // Texture sampler
+uniform vec3 lightPos;              // Light position uniform
+uniform vec3 lightColor;            // Light color uniform
+uniform vec3 viewPos;                // Camera position uniform
 
 void main() {
     // Ambient lighting

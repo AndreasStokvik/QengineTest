@@ -1,12 +1,10 @@
 #include "Mesh.h"
 
-// Constructor
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<TextureData>& textures)
     : vertices(vertices), indices(indices), textures(textures) {
     setupMesh();
 }
 
-// Destructor to clean up resources
 Mesh::~Mesh() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
@@ -45,16 +43,12 @@ void Mesh::setupMesh() {
     glBindVertexArray(0); // Unbind VAO
 }
 
-// Render the mesh
 void Mesh::draw(Shader& shader) {
-    // Bind the shader before drawing
-    shader.use();
-
     // Bind textures before drawing
     for (unsigned int i = 0; i < textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i); // Activate the proper texture unit before binding
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
-        shader.setInt("texture" + std::to_string(i), i);
+        shader.setUniform("texture" + std::to_string(i), static_cast<int>(i));
     }
 
     // Draw the mesh
@@ -69,7 +63,7 @@ void Mesh::draw(Shader& shader) {
     }
 }
 
-// Factory method for creating a cube (same as before)
+// Factory method for creating a cube
 Mesh Mesh::createCube() {
     std::vector<Vertex> vertices = {
         // Positions                // Normals              // Texture Coords
@@ -125,7 +119,7 @@ Mesh Mesh::createCube() {
         20, 21, 22, 22, 23, 20
     };
 
-    std::vector<TextureData> textures; // Assuming you'll fill this with your textures
+    std::vector<TextureData> textures;
 
     return Mesh(vertices, indices, textures);
 }

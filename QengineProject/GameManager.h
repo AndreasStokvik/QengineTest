@@ -19,7 +19,6 @@ private:
     void render();                     // Renders the scene
     void processInput();               // Handles input processing
 
-    // Member variables for components
     std::shared_ptr<Window> window;
     std::shared_ptr<Camera> camera;
     std::shared_ptr<InputManager> inputManager;
