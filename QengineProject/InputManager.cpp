@@ -6,13 +6,16 @@ struct InputCameraContext {
     std::shared_ptr<Camera> camera;
 };
 
+std::unique_ptr<Timer> timer = std::make_unique<Timer>();
+
 InputManager::InputManager(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera)
     : lastX(400), lastY(300), firstMouse(true) {
     keyStates.fill(false);
     setMouseCallback(window, camera);
 }
 
-void InputManager::processInput(const std::shared_ptr <Window>& window, const std::shared_ptr<Camera>& camera, float deltaTime) {
+void InputManager::processInput(const std::shared_ptr <Window>& window, const std::shared_ptr<Camera>& camera) {
+    float deltaTime = timer->getDeltaTime();
     // Movement keys (W, A, S, D, Space, Shift)
     if (isKeyPressed(window, GLFW_KEY_W))
         camera->processKeyboard(FORWARD, deltaTime);

@@ -5,15 +5,12 @@
 #include "InputManager.h"
 #include "Model.h"
 #include "ImGuiManager.h"
-#include "Timer.h"
 #include <memory>
 
 int main() {
     std::shared_ptr<Window> window = std::make_shared<Window>(800, 600, "OpenGL Window");
     std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
     std::unique_ptr<InputManager> inputManager = std::make_unique<InputManager>(window, camera);
-
-    std::unique_ptr<Timer> timer = std::make_unique<Timer>();
 
     std::unique_ptr<ImGuiManager> imgui = std::make_unique<ImGuiManager>(window);
     std::shared_ptr<Model> model = std::make_shared<Model>("models/cube2.obj");
@@ -24,7 +21,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glfwPollEvents();
 
-        inputManager->processInput(window, camera, timer->getDeltaTime());
+        inputManager->processInput(window, camera);
         transform->update(camera, window, shader);
 
         model->draw(shader);
