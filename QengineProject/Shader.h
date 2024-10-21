@@ -7,9 +7,11 @@
 #include <glm/glm.hpp>
 #include <memory>
 
+class Camera;   // Forward declaration
+
 class Shader {
 public:
-    Shader(const std::string& vertexPath, const std::string& fragmentPath, std::shared_ptr<Camera>& camera);
+    Shader(const std::string& vertexPath, const std::string& fragmentPath, std::shared_ptr<Camera> camera);
     ~Shader();
 
     void use() const;                                                         // Activate the shader program

@@ -10,9 +10,12 @@ public:
     Window(int width, int height, const std::string& title);
     ~Window();
 
+    GLFWwindow* getWindow() { return window; };
     void swapBuffers();
     bool shouldClose();
     bool isKeyPressed(int key);
+    float getAspectRatio() const;
+    void toggleCursor();
 
     // Set the mouse callback
     void setMouseCallback(GLFWcursorposfun callback) {
@@ -22,19 +25,15 @@ public:
         glfwSetWindowUserPointer(window, pointer);
     }
 
-    GLFWwindow* getWindow();
+    void setSize(int newWidth, int newHeight);
+    void setResizeCallback(GLFWwindowsizefun callback);
 
-    float getAspectRatio() const;
-
-    void toggleCursor();
 private:
     GLFWwindow* window;
-    void initGLFW();
-
-    int width;
-    int height;
-
+    int width, height;
     bool cursorHidden;
+
+    void initGLFW();
 };
 
 #endif WINDOW_H

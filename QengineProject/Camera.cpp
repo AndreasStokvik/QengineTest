@@ -4,12 +4,18 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
-    : front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(2.5f), mouseSensitivity(0.1f), zoom(45.0f) {
+Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch, const std::shared_ptr<Window>& window)
+    : front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(2.5f), mouseSensitivity(0.1f),
+    fov(45.0f), nearPlane(0.1f), farPlane(100.0f) {
+    up = glm::vec3(0.0f, 1.0f, 0.0f),
+    yaw = -90.0f,
+    pitch = 0.0f,
+
     this->position = position;
     this->worldUp = up;
     this->yaw = yaw;
     this->pitch = pitch;
+    updateProjectionMatrix(window);
     updateCameraVectors();
 }
 
@@ -54,6 +60,15 @@ void Camera::processMouseMovement(float xoffset, float yoffset, bool constrainPi
     }
 
     updateCameraVectors();
+}
+
+void Camera::setProjectionUniform(const std::shared_ptr<Shader> shader)
+{
+    shader->setUniform("projection", projection);
+}
+
+void Camera::updateProjectionMatrix(const std::shared_ptr<Window>& window) {
+    projection = glm::perspective(glm::radians(zoom), window->getAspectRatio(), 0.1f, 100.0f);
 }
 
 // Processes input received from the scroll wheel (not used)

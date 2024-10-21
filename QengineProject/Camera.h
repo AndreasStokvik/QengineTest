@@ -2,10 +2,13 @@
 #define CAMERA_H
 
 #include "Window.h"
+#include "Shader.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory>
+
+class Shader; // Forward declaration
 
 enum CameraMovement {
     FORWARD,
@@ -24,6 +27,13 @@ public:
     glm::vec3 right;
     glm::vec3 worldUp;
 
+    glm::mat4 projection;
+
+    float fov;           // Field of view
+    float nearPlane;     // Near clipping plane
+    float farPlane;      // Far clipping plane
+
+
     // Euler angles
     float yaw;
     float pitch;
@@ -33,7 +43,7 @@ public:
     float mouseSensitivity;
     float zoom;
 
-    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = -90.0f, float pitch = 0.0f);
+    Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch, const std::shared_ptr<Window>& window);
 
     // Get the view matrix (camera transformation)
     glm::mat4 getViewMatrix();
@@ -43,6 +53,10 @@ public:
 
     // Processes input from mouse movement
     void processMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
+
+    void setProjectionUniform(const std::shared_ptr<Shader> shader);
+
+    void updateProjectionMatrix(const std::shared_ptr<Window>& window);
 
     // Processes input from the mouse scroll wheel (not used)
     void processMouseScroll(float yoffset);

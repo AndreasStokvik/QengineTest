@@ -5,7 +5,7 @@
 #include <sstream>
 #include <iostream>
 
-Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, std::shared_ptr<Camera>& camera) {
+Shader::Shader(const std::string& vertexPath, const std::string& fragmentPath, std::shared_ptr<Camera> camera) {
     std::string vertexCode = loadShaderSource(vertexPath);
     std::string fragmentCode = loadShaderSource(fragmentPath);
 

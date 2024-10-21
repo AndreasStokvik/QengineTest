@@ -9,7 +9,6 @@ class Transform {
 public:
     glm::mat4 model;
     glm::mat4 view;
-    glm::mat4 projection;
 
     Transform(const std::shared_ptr<Camera>& camera, const std::shared_ptr <Window>& window, const std::shared_ptr<Shader>& shader);
 

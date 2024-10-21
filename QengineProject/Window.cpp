@@ -34,7 +34,15 @@ Window::~Window() {
     glfwTerminate();
 }
 
-GLFWwindow* Window::getWindow(){return window;}
+void Window::setSize(int newWidth, int newHeight) {
+    glfwSetWindowSize(window, newWidth, newHeight);
+    width = newWidth;
+    height = newHeight;
+}
+
+void Window::setResizeCallback(GLFWwindowsizefun callback) {
+    glfwSetWindowSizeCallback(window, callback);
+}
 
 void Window::initGLFW() {
     if (!glfwInit()) {
