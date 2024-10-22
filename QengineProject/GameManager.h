@@ -1,10 +1,16 @@
 #include "Window.h"
 #include "Shader.h"
 #include "Camera.h"
+#include "Model.h"
 #include "Transform.h"
 #include "InputManager.h"
-#include "Model.h"
 #include "ImGuiManager.h"
+
+// ECS
+#include "ComponentManager.h"
+#include "Entity.h"
+#include "../../components/RenderComponent.h"
+#include "../../components/TransformComponent.h"
 #include <memory>
 
 class GameManager {
@@ -29,6 +35,11 @@ private:
     std::shared_ptr<Model> model;
 
     std::shared_ptr<Shader> shader;
+
+    // ECS stuff
+    Entity entity;
+    ComponentManager<TransformComponent> transformManager;
+    ComponentManager<RenderComponent> renderManager;
 
     float lastFrameTime = 0.0f;
 };

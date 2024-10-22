@@ -16,6 +16,15 @@ void GameManager::init() {
     inputManager = std::make_shared<InputManager>(window, camera);
     imguiManager = std::make_shared<ImGuiManager>(window);
     model = std::make_shared<Model>("models/test1.obj");
+
+
+    // ECS stuff  --------------------------------------------------------------------------------------------------------
+    entity = Entity(1);
+    transformManager.addComponent(entity.getId(), TransformComponent(glm::vec3(0.0f), glm::vec3(0.0f), glm::vec3(1.0f)));
+    renderManager.addComponent(entity.getId(), RenderComponent("models/cube2.obj"));
+    //  ------------------------------------------------------------------------------------------------------------------
+
+
     shader = std::make_shared<Shader>("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl", camera);
     transform = std::make_shared<Transform>(camera, window, shader);
 
@@ -56,4 +65,6 @@ void GameManager::shutdown() {
     glfwTerminate();
 }
 
-void GameManager::processInput() { inputManager->processInput(window, camera); }
+void GameManager::processInput() { 
+    inputManager->processInput(window, camera); 
+}
