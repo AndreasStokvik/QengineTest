@@ -62,7 +62,6 @@ bld/
 *.vsp
 *.shproj
 *.vcxproj.user
-*.vcxproj.filters
 
 # Visual Studio Code settings
 .vscode/
