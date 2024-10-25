@@ -1,10 +1,13 @@
 #pragma once
+#include <memory>
 #include <string>
+#include "../../QengineProject/Model.h"
 
 struct RenderComponent {
-    std::string modelFile;
+    std::shared_ptr<Model> model;
 
-    RenderComponent() : modelFile("") {}
+    RenderComponent() : model(nullptr) {}
 
-    RenderComponent(const std::string& model) : modelFile(model) {}
+    RenderComponent(const std::shared_ptr<Model>& modelPtr)
+        : model(modelPtr) {}
 };

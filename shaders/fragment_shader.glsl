@@ -14,7 +14,7 @@ uniform bool hasTexture;            // Texture presence uniform
 
 void main() {
     // Ambient lighting
-    float ambientStrength = 0.5;
+    float ambientStrength = 0.25;
     vec3 ambient = ambientStrength * lightColor;
 
     // Diffuse lighting

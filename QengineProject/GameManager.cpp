@@ -10,7 +10,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 }
 
 void GameManager::init() {
-    window = std::make_shared<Window>(800, 600, "OpenGL Window");
+    window = std::make_shared<Window>(1280, 720, "OpenGL Window");
     window->setResizeCallback(framebuffer_size_callback);
     camera = std::make_shared<Camera>(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, window);
     inputManager = std::make_shared<InputManager>(window, camera);
@@ -18,20 +18,26 @@ void GameManager::init() {
     model = std::make_shared<Model>("models/test1.obj");
 
 
-    // ECS stuff  --------------------------------------------------------------------------------------------------------
-    entity = Entity(1);
-    transformManager.addComponent(entity.getId(), TransformComponent(glm::vec3(0.0f), glm::vec3(0.0f), glm::vec3(1.0f)));
-    renderManager.addComponent(entity.getId(), RenderComponent("models/cube2.obj"));
+    // Entity creation  --------------------------------------------------------------------------------------------------
+    int entityId = entityManager.createEntity();
+    transformManager.addComponent(entityId, TransformComponent(glm::vec3(1.0f), glm::vec3(0.0f), glm::vec3(1.0f)));
+    auto modelPtr1 = std::make_shared<Model>("models/cube2.obj");
+    renderManager.addComponent(entityId, RenderComponent(modelPtr1));
+
+    int entity2 = entityManager.createEntity();
+    transformManager.addComponent(entity2, TransformComponent(glm::vec3(10.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.5f), glm::vec3(0.5f)));
+    auto modelPtr2 = std::make_shared<Model>("models/test1.obj");
+    renderManager.addComponent(entity2, RenderComponent(modelPtr2));
     //  ------------------------------------------------------------------------------------------------------------------
 
 
     shader = std::make_shared<Shader>("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl", camera);
-    transform = std::make_shared<Transform>(camera, window, shader);
+    transform = std::make_shared<Transform>(camera, shader);
 
     shader->use();
     camera->setProjectionUniform(shader);
-    transform->setTransformUniforms(shader);
-    shader->setLightingUniforms(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(2.0f, 2.0f, 2.0f), camera->getPosition());
+    transform->setViewUniform(shader);
+    shader->setLightingUniforms(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(2.0f, 10.0f, 2.0f), camera->getPosition());
 }
 
 void GameManager::run()
@@ -39,7 +45,6 @@ void GameManager::run()
     while (!window->shouldClose()) {
         glfwPollEvents();
         processInput();
-        update();
         camera->updateProjectionMatrix(window);
         render();
 
@@ -49,16 +54,39 @@ void GameManager::run()
 }
 
 void GameManager::update() {
-    transform->update(camera, window, shader);
+    transform->updateViewMatrix(camera);
+    transform->setViewUniform(shader);
+    for (int entity : entityManager.getEntities()) {
+        if (transformManager.hasComponent(entity)) {
+            TransformComponent& transformComp = transformManager.getComponent(entity);
+            transform->update(transformComp, shader);
+        }
+    }
 }
 
 void GameManager::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     shader->use();
+    update();
 
-    model->draw(shader);
+    for (int entity : entityManager.getEntities()) {
+        if (transformManager.hasComponent(entity)) {
+            TransformComponent& transformComp = transformManager.getComponent(entity);
+            transform->update(transformComp, shader);
+
+            if (renderManager.hasComponent(entity)) {
+                RenderComponent& renderComp = renderManager.getComponent(entity);
+                if (renderComp.model) { // Check if the model is valid
+                    renderComp.model->draw(shader); // Access the model pointer
+                }
+            }
+        }
+    }
+
     //imguiManager->BasicText("Title", "text");
+    //model->draw(shader);
 }
+
 
 void GameManager::shutdown() {
     imguiManager->shutdown();

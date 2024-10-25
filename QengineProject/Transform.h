@@ -1,18 +1,21 @@
-#include "Camera.h"
-#include "Window.h"
-#include "Shader.h"
+#pragma once
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <memory>
+#include "../components/TransformComponent.h"
+
+class Camera;
+class Shader;
 
 class Transform {
 public:
     glm::mat4 model;
     glm::mat4 view;
 
-    Transform(const std::shared_ptr<Camera>& camera, const std::shared_ptr <Window>& window, const std::shared_ptr<Shader>& shader);
+    Transform(const std::shared_ptr<Camera>& camera, const std::shared_ptr<Shader>& shader);
 
-    void update(const std::shared_ptr<Camera>& camera, const std::shared_ptr <Window>& window, const std::shared_ptr<Shader>& shader);
+    void update(const TransformComponent& transformComp, const std::shared_ptr<Shader>& shader);
 
-    void setTransformUniforms(const std::shared_ptr<Shader>& shader);
+    void setViewUniform(const std::shared_ptr<Shader>& shader);
+    void setModelUniform(const std::shared_ptr<Shader>& shader);
+    void updateViewMatrix(const std::shared_ptr<Camera>& camera);
 };

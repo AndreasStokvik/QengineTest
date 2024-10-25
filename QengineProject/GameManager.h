@@ -8,6 +8,7 @@
 
 // ECS
 #include "ComponentManager.h"
+#include "EntityManager.h"
 #include "Entity.h"
 #include "../../components/RenderComponent.h"
 #include "../../components/TransformComponent.h"
@@ -37,6 +38,7 @@ private:
     std::shared_ptr<Shader> shader;
 
     // ECS stuff
+    EntityManager entityManager;
     Entity entity;
     ComponentManager<TransformComponent> transformManager;
     ComponentManager<RenderComponent> renderManager;
