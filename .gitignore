@@ -44,6 +44,7 @@ bld/
 *.idb
 *.dll
 *.lib
+!libs/glfw/lib-vc2022/glfw3.lib
 *.ncb
 *.sdf
 *.ipch
