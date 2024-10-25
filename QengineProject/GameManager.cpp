@@ -20,7 +20,7 @@ void GameManager::init() {
 
     // Entity creation  --------------------------------------------------------------------------------------------------
     int entityId = entityManager.createEntity();
-    transformManager.addComponent(entityId, TransformComponent(glm::vec3(1.0f), glm::vec3(0.0f), glm::vec3(1.0f)));
+    transformManager.addComponent(entityId, TransformComponent(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f), glm::vec3(1.0f)));
     auto modelPtr1 = std::make_shared<Model>("models/cube2.obj");
     renderManager.addComponent(entityId, RenderComponent(modelPtr1));
 
@@ -28,6 +28,15 @@ void GameManager::init() {
     transformManager.addComponent(entity2, TransformComponent(glm::vec3(10.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.5f), glm::vec3(0.5f)));
     auto modelPtr2 = std::make_shared<Model>("models/test1.obj");
     renderManager.addComponent(entity2, RenderComponent(modelPtr2));
+
+    int entity3 = entityManager.createEntity();
+    transformManager.addComponent(entity3, TransformComponent(glm::vec3(2.0f, -5.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.5f), glm::vec3(0.12f)));
+    auto modelPtr3 = std::make_shared<Model>("models/environment.obj");
+    renderManager.addComponent(entity3, RenderComponent(modelPtr3));
+
+    int entityId4 = entityManager.createEntity();
+    transformManager.addComponent(entityId4, TransformComponent(glm::vec3(-20.0f, 10.0f, -20.0f), glm::vec3(45.0f, 0.0f, 45.0f), glm::vec3(10.0f)));
+    renderManager.addComponent(entityId4, RenderComponent(modelPtr1));
     //  ------------------------------------------------------------------------------------------------------------------
 
 
@@ -76,9 +85,7 @@ void GameManager::render() {
 
             if (renderManager.hasComponent(entity)) {
                 RenderComponent& renderComp = renderManager.getComponent(entity);
-                if (renderComp.model) { // Check if the model is valid
-                    renderComp.model->draw(shader); // Access the model pointer
-                }
+                renderComp.model->draw(shader);
             }
         }
     }
@@ -86,7 +93,6 @@ void GameManager::render() {
     //imguiManager->BasicText("Title", "text");
     //model->draw(shader);
 }
-
 
 void GameManager::shutdown() {
     imguiManager->shutdown();
