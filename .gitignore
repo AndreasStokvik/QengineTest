@@ -87,6 +87,4 @@ cmake_install.cmake
 *.a
 *.o
 
-libs/assimp/include/assimp/
-
 models/
