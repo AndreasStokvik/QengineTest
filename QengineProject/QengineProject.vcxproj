@@ -108,7 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\libs\imgui;$(SolutionDir)\libs\assimp\include;$(SolutionDir)\libs\glad\include;$(SolutionDir)\libs\glad\include\glad;K:\VSCode2022\openGL\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\libs\imgui;$(SolutionDir)\libs\assimp\include;$(SolutionDir)\libs\glad\include;$(SolutionDir)\libs\glad\include\glad;$(SolutionDir)\libs\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
