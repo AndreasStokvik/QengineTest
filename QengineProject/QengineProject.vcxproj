@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\components\InputComponent.cpp" />
     <ClCompile Include="..\components\RenderComponent.cpp" />
     <ClCompile Include="..\components\TransformComponent.cpp" />
     <ClCompile Include="..\components\VelocityComponent.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="ImGuiManager.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
@@ -163,6 +165,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\components\InputComponent.h" />
     <ClInclude Include="..\components\RenderComponent.h" />
     <ClInclude Include="..\components\TransformComponent.h" />
     <ClInclude Include="..\components\VelocityComponent.h" />
@@ -182,6 +185,7 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InputSystem.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="Shader.h" />

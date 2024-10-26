@@ -17,13 +17,13 @@ InputManager::InputManager(const std::shared_ptr<Window>& window, const std::sha
 void InputManager::processInput(const std::shared_ptr <Window>& window, const std::shared_ptr<Camera>& camera) {
     float deltaTime = timer->getDeltaTime();
     // Movement keys (W, A, S, D, Space, Shift)
-    if (isKeyPressed(window, GLFW_KEY_W))
+    if (isKeyPressed(window, GLFW_KEY_UP))
         camera->processKeyboard(FORWARD, deltaTime);
-    if (isKeyPressed(window, GLFW_KEY_S))
+    if (isKeyPressed(window, GLFW_KEY_DOWN))
         camera->processKeyboard(BACKWARD, deltaTime);
-    if (isKeyPressed(window, GLFW_KEY_A))
+    if (isKeyPressed(window, GLFW_KEY_LEFT))
         camera->processKeyboard(LEFT, deltaTime);
-    if (isKeyPressed(window, GLFW_KEY_D))
+    if (isKeyPressed(window, GLFW_KEY_RIGHT))
         camera->processKeyboard(RIGHT, deltaTime);
     if (isKeyPressed(window, GLFW_KEY_SPACE))
         camera->processKeyboard(UP, deltaTime);
@@ -37,7 +37,7 @@ void InputManager::processInput(const std::shared_ptr <Window>& window, const st
     }
 }
 
-// Check if a key was pressed just once (spam protection)
+// Checking if a key was pressed just once (spam protection)
 bool InputManager::isKeyPressedOnce(const std::shared_ptr <Window>& window, int key) {
     if (glfwGetKey(window->getWindow(), key) == GLFW_PRESS) {
         if (!keyStates[key]) {
@@ -53,6 +53,25 @@ bool InputManager::isKeyPressedOnce(const std::shared_ptr <Window>& window, int 
 
 bool InputManager::isKeyPressed(const std::shared_ptr <Window>& window, int key) {
     return glfwGetKey(window->getWindow(), key) == GLFW_PRESS;
+}
+
+glm::vec3 InputManager::getMovementDirection(const std::shared_ptr<Window>& window) {
+    glm::vec3 direction(0.0f);
+
+    if (isKeyPressed(window, GLFW_KEY_W))
+        direction.z -= 1.0f;
+    if (isKeyPressed(window, GLFW_KEY_S))
+        direction.z += 1.0f;
+    if (isKeyPressed(window, GLFW_KEY_A))
+        direction.x -= 1.0f;
+    if (isKeyPressed(window, GLFW_KEY_D))
+        direction.x += 1.0f;
+    /*if (isKeyPressed(window, GLFW_KEY_SPACE))
+        direction.y += 1.0f;
+    if (isKeyPressed(window, GLFW_KEY_LEFT_SHIFT))
+        direction.y -= 1.0f;*/
+
+    return glm::normalize(direction);
 }
 
 void InputManager::toggleMouseControl()
@@ -79,11 +98,9 @@ void InputManager::handleMouseMovement(double xpos, double ypos, const std::shar
 }
 
 void InputManager::setMouseCallback(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera) {
-    // Create a struct that holds both InputManager and Camera pointers
     auto* context = new InputCameraContext{ this, camera };
     glfwSetWindowUserPointer(window->getWindow(), context);
 
-    // Use a static callback that retrieves the InputManager and Camera from the user pointer
     glfwSetCursorPosCallback(window->getWindow(), [](GLFWwindow* glfwWindow, double xpos, double ypos) {
         auto* context = static_cast<InputCameraContext*>(glfwGetWindowUserPointer(glfwWindow));
         context->inputManager->handleMouseMovement(xpos, ypos, context->camera);

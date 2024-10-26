@@ -1,4 +1,11 @@
 #pragma once
+
+#include <iostream>
+#include <string>
+
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
+
 #include "EntityManager.h"
 #include "ComponentManager.h"
 #include "../../components/TransformComponent.h"
@@ -18,8 +25,8 @@ public:
                 TransformComponent& transformComp = transformManager.getComponent(entity);
                 VelocityComponent& velocityComp = velocityManager.getComponent(entity);
 
-                // Update position based on velocity and deltaTime
                 transformComp.position += velocityComp.velocity * deltaTime;
+                //std::cout << "velocity: " << glm::to_string(velocityComp.velocity) << std::endl;
             }
         }
     }

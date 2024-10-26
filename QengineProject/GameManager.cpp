@@ -13,17 +13,20 @@ void GameManager::init() {
     window = std::make_shared<Window>(1280, 720, "OpenGL Window");
     window->setResizeCallback(framebuffer_size_callback);
     camera = std::make_shared<Camera>(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, window);
-    inputManager = std::make_shared<InputManager>(window, camera);
     imguiManager = std::make_shared<ImGuiManager>(window);
     model = std::make_shared<Model>("models/test1.obj");
+
+    inputManager = std::make_shared<InputManager>(window, camera);
     physicsSystem = std::make_shared<PhysicsSystem>(entityManager, transformManager, velocityManager);
+    inputSystem = std::make_shared<InputSystem>(entityManager, inputManagerComponent, velocityManager, inputManager);
 
     // Entity creation  ----------------------------------------------------------------------------------------------------------------------------------------
     int entityId = entityManager.createEntity();
     transformManager.addComponent(entityId, TransformComponent(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f), glm::vec3(1.0f)));
     auto modelPtr1 = std::make_shared<Model>("models/cube2.obj");
     renderManager.addComponent(entityId, RenderComponent(modelPtr1));
-    velocityManager.addComponent(entityId, VelocityComponent(glm::vec3(0.1f, 0.0f, 0.0f)));
+    velocityManager.addComponent(entityId, VelocityComponent(glm::vec3(0.0f, 0.0f, 0.0f)));
+    inputManagerComponent.addComponent(entityId, InputComponent());
 
     int entity2 = entityManager.createEntity();
     transformManager.addComponent(entity2, TransformComponent(glm::vec3(10.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.5f), glm::vec3(0.5f)));
@@ -68,6 +71,7 @@ void GameManager::update() {
     float deltaTime = currentFrameTime - lastFrameTime;
     lastFrameTime = currentFrameTime;
 
+    inputSystem->update(window, deltaTime);
     physicsSystem->update(deltaTime);
 
     transform->updateViewMatrix(camera);

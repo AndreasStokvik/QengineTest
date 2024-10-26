@@ -9,6 +9,7 @@
 #include "ImGuiManager.h"
 
 #include "PhysicsSystem.h"
+#include "InputSystem.h"
 
 // ECS
 #include "ComponentManager.h"
@@ -17,6 +18,7 @@
 #include "../../components/RenderComponent.h"
 #include "../../components/TransformComponent.h"
 #include "../../components/VelocityComponent.h"
+#include "../../components/InputComponent.h"
 
 class GameManager {
 public:
@@ -41,14 +43,17 @@ private:
 
     std::shared_ptr<Shader> shader;
 
-    std::shared_ptr<PhysicsSystem> physicsSystem;
-
     // ECS
     EntityManager entityManager;
     Entity entity;
     ComponentManager<TransformComponent> transformManager;
     ComponentManager<RenderComponent> renderManager;
     ComponentManager<VelocityComponent> velocityManager;
+    ComponentManager<InputComponent> inputManagerComponent;
+
+    std::shared_ptr<PhysicsSystem> physicsSystem;
+    std::shared_ptr<InputSystem> inputSystem;
+
 
     float lastFrameTime = 0.0f;
 };
