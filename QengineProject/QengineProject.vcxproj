@@ -139,6 +139,7 @@
   <ItemGroup>
     <ClCompile Include="..\components\RenderComponent.cpp" />
     <ClCompile Include="..\components\TransformComponent.cpp" />
+    <ClCompile Include="..\components\VelocityComponent.cpp" />
     <ClCompile Include="..\libs\glad\src\glad.c" />
     <ClCompile Include="..\libs\imgui\imgui.cpp" />
     <ClCompile Include="..\libs\imgui\imgui_demo.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -163,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="..\components\RenderComponent.h" />
     <ClInclude Include="..\components\TransformComponent.h" />
+    <ClInclude Include="..\components\VelocityComponent.h" />
     <ClInclude Include="..\libs\imgui\imconfig.h" />
     <ClInclude Include="..\libs\imgui\imgui.h" />
     <ClInclude Include="..\libs\imgui\imgui_impl_glfw.h" />
@@ -180,6 +183,7 @@
     <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Transform.h" />

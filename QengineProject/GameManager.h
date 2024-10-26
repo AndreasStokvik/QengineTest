@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "Window.h"
 #include "Shader.h"
 #include "Camera.h"
@@ -6,13 +8,15 @@
 #include "InputManager.h"
 #include "ImGuiManager.h"
 
+#include "PhysicsSystem.h"
+
 // ECS
 #include "ComponentManager.h"
 #include "EntityManager.h"
 #include "Entity.h"
 #include "../../components/RenderComponent.h"
 #include "../../components/TransformComponent.h"
-#include <memory>
+#include "../../components/VelocityComponent.h"
 
 class GameManager {
 public:
@@ -37,11 +41,14 @@ private:
 
     std::shared_ptr<Shader> shader;
 
-    // ECS stuff
+    std::shared_ptr<PhysicsSystem> physicsSystem;
+
+    // ECS
     EntityManager entityManager;
     Entity entity;
     ComponentManager<TransformComponent> transformManager;
     ComponentManager<RenderComponent> renderManager;
+    ComponentManager<VelocityComponent> velocityManager;
 
     float lastFrameTime = 0.0f;
 };

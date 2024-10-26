@@ -16,13 +16,14 @@ void GameManager::init() {
     inputManager = std::make_shared<InputManager>(window, camera);
     imguiManager = std::make_shared<ImGuiManager>(window);
     model = std::make_shared<Model>("models/test1.obj");
+    physicsSystem = std::make_shared<PhysicsSystem>(entityManager, transformManager, velocityManager);
 
-
-    // Entity creation  --------------------------------------------------------------------------------------------------
+    // Entity creation  ----------------------------------------------------------------------------------------------------------------------------------------
     int entityId = entityManager.createEntity();
     transformManager.addComponent(entityId, TransformComponent(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f), glm::vec3(1.0f)));
     auto modelPtr1 = std::make_shared<Model>("models/cube2.obj");
     renderManager.addComponent(entityId, RenderComponent(modelPtr1));
+    velocityManager.addComponent(entityId, VelocityComponent(glm::vec3(0.1f, 0.0f, 0.0f)));
 
     int entity2 = entityManager.createEntity();
     transformManager.addComponent(entity2, TransformComponent(glm::vec3(10.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.5f), glm::vec3(0.5f)));
@@ -37,7 +38,7 @@ void GameManager::init() {
     int entityId4 = entityManager.createEntity();
     transformManager.addComponent(entityId4, TransformComponent(glm::vec3(-20.0f, 10.0f, -20.0f), glm::vec3(45.0f, 0.0f, 45.0f), glm::vec3(10.0f)));
     renderManager.addComponent(entityId4, RenderComponent(modelPtr1));
-    //  ------------------------------------------------------------------------------------------------------------------
+    //  --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
     shader = std::make_shared<Shader>("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl", camera);
@@ -63,6 +64,12 @@ void GameManager::run()
 }
 
 void GameManager::update() {
+    float currentFrameTime = glfwGetTime();
+    float deltaTime = currentFrameTime - lastFrameTime;
+    lastFrameTime = currentFrameTime;
+
+    physicsSystem->update(deltaTime);
+
     transform->updateViewMatrix(camera);
     transform->setViewUniform(shader);
     for (int entity : entityManager.getEntities()) {
