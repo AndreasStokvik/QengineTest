@@ -66,10 +66,10 @@ glm::vec3 InputManager::getMovementDirection(const std::shared_ptr<Window>& wind
         direction.x -= 1.0f;
     if (isKeyPressed(window, GLFW_KEY_D))
         direction.x += 1.0f;
-    /*if (isKeyPressed(window, GLFW_KEY_SPACE))
+    if (isKeyPressed(window, GLFW_KEY_SPACE))
         direction.y += 1.0f;
     if (isKeyPressed(window, GLFW_KEY_LEFT_SHIFT))
-        direction.y -= 1.0f;*/
+        direction.y -= 1.0f;
 
     return glm::normalize(direction);
 }

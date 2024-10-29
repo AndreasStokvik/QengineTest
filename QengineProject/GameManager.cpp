@@ -60,7 +60,6 @@ void GameManager::run()
         processInput();
         camera->updateProjectionMatrix(window);
         render();
-
         window->swapBuffers();
     }
     shutdown();
