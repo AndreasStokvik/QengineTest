@@ -1,7 +1,6 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "Window.h"
 #include "Shader.h"
 
 #include <glm/glm.hpp>
@@ -33,7 +32,6 @@ public:
     float nearPlane;     // Near clipping plane
     float farPlane;      // Far clipping plane
 
-
     // Euler angles
     float yaw;
     float pitch;
@@ -42,10 +40,11 @@ public:
     float movementSpeed;
     float mouseSensitivity;
     float zoom;
+    float aspectRatio;
 
     glm::vec3 cameraOffset = glm::vec3(0.0f, 5.0f, 0.0f);
 
-    Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch, const std::shared_ptr<Window>& window);
+    Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch);
 
     // Get the view matrix (camera transformation)
     glm::mat4 getViewMatrix();
@@ -58,7 +57,7 @@ public:
 
     void setProjectionUniform(const std::shared_ptr<Shader> shader);
 
-    void updateProjectionMatrix(const std::shared_ptr<Window>& window);
+    void updateProjectionMatrix();
 
     // Processes input from the mouse scroll wheel (not used)
     void processMouseScroll(float yoffset);
@@ -66,6 +65,8 @@ public:
     glm::vec3 getPosition() const;
     void setPosition(const glm::vec3& newPosition);
     void setTarget(const glm::vec3& target);
+
+    void setAspectRatio(float newAspectRatio) {aspectRatio = newAspectRatio;}
 
     void followObject(const glm::vec3& objectPosition, float objectYaw);
 private:

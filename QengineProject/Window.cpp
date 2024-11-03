@@ -1,7 +1,8 @@
 #include "Window.h"
 #include <iostream>
 
-Window::Window(int width, int height, const std::string& title) : width(width), height(height) {
+Window::Window(int width, int height, const std::string& title,const std::shared_ptr<Camera>& camera) 
+    : width(width), height(height), camera(camera) {
     initGLFW();
 
     window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
@@ -11,7 +12,6 @@ Window::Window(int width, int height, const std::string& title) : width(width), 
         throw std::runtime_error("Failed to create window.");
     }
 
-    // Make the window's context current
     glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -27,6 +27,9 @@ Window::Window(int width, int height, const std::string& title) : width(width), 
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     cursorHidden = true;
     glfwSetCursorPos(window, width / 2, height / 2);
+
+    glfwSetWindowUserPointer(window, this);
+    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
 }
 
 Window::~Window() {
@@ -35,6 +38,12 @@ Window::~Window() {
 }
 
 void Window::setSize(int newWidth, int newHeight) {
+    if (!window) {
+        std::cerr << "GLFW window is not initialized!" << std::endl;
+        return;
+    }
+    std::cout << "Setting window size to: " << newWidth << "x" << newHeight << std::endl;
+
     glfwSetWindowSize(window, newWidth, newHeight);
     width = newWidth;
     height = newHeight;
@@ -42,6 +51,18 @@ void Window::setSize(int newWidth, int newHeight) {
 
 void Window::setResizeCallback(GLFWwindowsizefun callback) {
     glfwSetWindowSizeCallback(window, callback);
+}
+
+void Window::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+    Window* windowInstance = static_cast<Window*>(glfwGetWindowUserPointer(window));
+    if (windowInstance) {
+        windowInstance->setSize(width, height);
+        if (windowInstance->camera) {
+            windowInstance->camera->setAspectRatio(windowInstance->getAspectRatio());
+            windowInstance->camera->updateProjectionMatrix();
+        }
+    }
 }
 
 void Window::initGLFW() {

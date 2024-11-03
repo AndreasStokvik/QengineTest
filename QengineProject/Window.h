@@ -5,9 +5,14 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
+#include "Camera.h"
+
 class Window {
 public:
-    Window(int width, int height, const std::string& title);
+    int width, height;
+    std::shared_ptr<Camera> camera;
+
+    Window(int width, int height, const std::string& title, const std::shared_ptr<Camera>& camera);
     ~Window();
 
     GLFWwindow* getWindow() { return window; };
@@ -28,9 +33,10 @@ public:
     void setSize(int newWidth, int newHeight);
     void setResizeCallback(GLFWwindowsizefun callback);
 
+    static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
+
 private:
     GLFWwindow* window;
-    int width, height;
     bool cursorHidden;
 
     void initGLFW();

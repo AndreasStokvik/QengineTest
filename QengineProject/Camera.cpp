@@ -4,9 +4,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch, const std::shared_ptr<Window>& window)
+Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitchw)
     : front(glm::vec3(0.0f, 0.0f, -1.0f)), movementSpeed(2.5f), mouseSensitivity(0.1f),
-    fov(45.0f), nearPlane(0.1f), farPlane(100.0f) {
+    fov(90.0f), nearPlane(0.1f), farPlane(100.0f) {
     up = glm::vec3(0.0f, 1.0f, 0.0f),
     yaw = -90.0f,
     pitch = 0.0f,
@@ -15,7 +15,8 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch, const s
     this->worldUp = up;
     this->yaw = yaw;
     this->pitch = pitch;
-    updateProjectionMatrix(window);
+    this->aspectRatio = 1.77778f;
+    updateProjectionMatrix();
     updateCameraVectors();
 }
 
@@ -67,8 +68,9 @@ void Camera::setProjectionUniform(const std::shared_ptr<Shader> shader)
     shader->setUniform("projection", projection);
 }
 
-void Camera::updateProjectionMatrix(const std::shared_ptr<Window>& window) {
-    projection = glm::perspective(glm::radians(zoom), window->getAspectRatio(), 0.1f, 100.0f);
+void Camera::updateProjectionMatrix() {
+    projection = glm::perspective(glm::radians(fov), aspectRatio, nearPlane, farPlane);
+    std::cout << "Ratio: " << aspectRatio << std::endl;
 }
 
 // Processes input received from the scroll wheel (not used)

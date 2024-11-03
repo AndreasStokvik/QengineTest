@@ -1,23 +1,14 @@
 #include "GameManager.h"
 GameManager::GameManager() {}
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
-    glViewport(0, 0, width, height);
-    GameManager* gameManager = static_cast<GameManager*>(glfwGetWindowUserPointer(window));
-    if (gameManager) {
-        gameManager->camera->updateProjectionMatrix(gameManager->window);
-    }
-}
-
 void GameManager::init() {
-    window = std::make_shared<Window>(1280, 720, "OpenGL Window");
-    window->setResizeCallback(framebuffer_size_callback);
-    camera = std::make_shared<Camera>(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f, window);
+    camera = std::make_shared<Camera>(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
+    window = std::make_shared<Window>(1280, 720, "OpenGL Window", camera);
     imguiManager = std::make_shared<ImGuiManager>(window);
-
     inputManager = std::make_shared<InputManager>(window, camera, inputManagerComponent, entityManager, transformManager);
     physicsSystem = std::make_shared<PhysicsSystem>(entityManager, transformManager, velocityManager);
     inputSystem = std::make_shared<InputSystem>(entityManager, inputManagerComponent, velocityManager, inputManager, transformManager);
+
 
     // Entity creation  ----------------------------------------------------------------------------------------------------------------------------------------
     int entityId = entityManager.createEntity();
@@ -57,7 +48,7 @@ void GameManager::run()
     while (!window->shouldClose()) {
         glfwPollEvents();
         processInput();
-        camera->updateProjectionMatrix(window);
+        //camera->updateProjectionMatrix();
         render();
         window->swapBuffers();
     }
@@ -71,8 +62,6 @@ void GameManager::update() {
 
     inputSystem->update(window, deltaTime);
     physicsSystem->update(deltaTime);
-
-    // Assume entityId is the ID of the object to follow
 
     transform->updateViewMatrix(camera);
     transform->setViewUniform(shader);

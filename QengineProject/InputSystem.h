@@ -36,9 +36,8 @@ public:
             glm::vec3 rawDirection = inputManagerInstance->getMovementDirection(window);
             glm::vec3 rotatedDirection = rotateDirectionByYaw(rawDirection, transformComp.rotation.y);
 
-            // Check for NaN values in the rotated direction
-            if (glm::any(glm::isnan(rotatedDirection))) {
-                rotatedDirection = glm::vec3(0.0f); // Reset to zero if NaN
+            if (glm::any(glm::isnan(rotatedDirection))) {   // Check for NaN values in the rotated direction
+                rotatedDirection = glm::vec3(0.0f);         // Reset to zero if NaN
             } else {
                 if (glm::length(rotatedDirection) > 0.0f) {
                     rotatedDirection = glm::normalize(rotatedDirection);
@@ -49,20 +48,18 @@ public:
     }
 }
 
-    glm::vec3 rotateDirectionByYaw(const glm::vec3& direction, float yaw) {
-        // Convert yaw to radians and create rotation matrix
-        float radians = glm::radians(yaw);
-        glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), radians, glm::vec3(0.0f, 1.0f, 0.0f));
+glm::vec3 rotateDirectionByYaw(const glm::vec3& direction, float yaw) {
+    float radians = glm::radians(yaw);
+    glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), radians, glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::vec4 rotatedDirection = rotationMatrix * glm::vec4(direction, 0.0f);
+    return glm::vec3(rotatedDirection);
+}
 
-        // Apply rotation to direction vector
-        glm::vec4 rotatedDirection = rotationMatrix * glm::vec4(direction, 0.0f);
-        return glm::vec3(rotatedDirection);
-    }
 private:
     EntityManager& entityManager;
     ComponentManager<InputComponent>& inputComponents;
     ComponentManager<VelocityComponent>& velocityComponents;
     ComponentManager<TransformComponent>& transformComponents;
     std::shared_ptr<InputManager> inputManagerInstance;
-    float desiredSpeed = 10.0f; // Movement speed
+    float desiredSpeed = 10.0f;                             // Movement speed
 };
