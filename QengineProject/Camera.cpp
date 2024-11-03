@@ -88,3 +88,26 @@ void Camera::updateCameraVectors() {
 glm::vec3 Camera::getPosition() const {
     return position;
 }
+
+void Camera::setPosition(const glm::vec3& newPosition) {
+    position = newPosition + cameraOffset;
+    updateCameraVectors();
+}
+
+void Camera::setTarget(const glm::vec3& target) {
+    front = glm::normalize(target - position);
+    yaw = glm::degrees(atan2(front.z, front.x));
+    pitch = glm::degrees(asin(front.y));
+    updateCameraVectors();
+}
+
+void Camera::followObject(const glm::vec3& objectPosition, float objectYaw) {
+    float distance = glm::length(cameraOffset);
+    float offsetX = distance * glm::sin(glm::radians(objectYaw));
+    float offsetZ = distance * glm::cos(glm::radians(objectYaw));
+
+    glm::vec3 cameraPos = objectPosition - glm::vec3(-offsetX, cameraOffset.y, -offsetZ);
+
+    setPosition(cameraPos);
+    setTarget(objectPosition);
+}

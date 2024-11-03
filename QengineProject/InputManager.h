@@ -5,6 +5,10 @@
 #include <memory>
 #include "Window.h"
 #include "Camera.h"
+#include "ComponentManager.h"
+#include "EntityManager.h"
+#include "../../components/InputComponent.h"
+#include "../../components/TransformComponent.h"
 
 class Timer {
 public:
@@ -20,7 +24,9 @@ private:
 
 class InputManager {
 public:
-    InputManager(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera);
+    InputManager(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera, 
+        ComponentManager<InputComponent>& inputManagerComponent, EntityManager& entityManager, 
+        ComponentManager<TransformComponent>&transformManager);
 
     void processInput(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera);
     bool isKeyPressedOnce(const std::shared_ptr<Window>& window, int key);
@@ -37,6 +43,11 @@ private:
     bool firstMouse;
     float lastX, lastY;
     std::array<bool, 1024> keyStates;
+    float objectSensitivity = -0.1f;
+
+    ComponentManager<InputComponent>& inputManagerComponent;
+    ComponentManager<TransformComponent>& transformManager;
+    EntityManager& entityManager;
 };
 
 #endif // INPUTMANAGER_H

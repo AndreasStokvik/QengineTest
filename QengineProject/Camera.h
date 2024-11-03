@@ -43,6 +43,8 @@ public:
     float mouseSensitivity;
     float zoom;
 
+    glm::vec3 cameraOffset = glm::vec3(0.0f, 5.0f, 0.0f);
+
     Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch, const std::shared_ptr<Window>& window);
 
     // Get the view matrix (camera transformation)
@@ -62,6 +64,10 @@ public:
     void processMouseScroll(float yoffset);
 
     glm::vec3 getPosition() const;
+    void setPosition(const glm::vec3& newPosition);
+    void setTarget(const glm::vec3& target);
+
+    void followObject(const glm::vec3& objectPosition, float objectYaw);
 private:
     void updateCameraVectors();
 

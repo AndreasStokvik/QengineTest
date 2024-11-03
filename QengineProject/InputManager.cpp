@@ -8,8 +8,11 @@ struct InputCameraContext {
 
 std::unique_ptr<Timer> timer = std::make_unique<Timer>();
 
-InputManager::InputManager(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera)
-    : lastX(400), lastY(300), firstMouse(true) {
+InputManager::InputManager(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera, 
+    ComponentManager<InputComponent>& inputManagerComponent, EntityManager& entityManager,
+    ComponentManager<TransformComponent>& transformManager)
+    : lastX(400), lastY(300), firstMouse(true), inputManagerComponent(inputManagerComponent),
+    entityManager(entityManager), transformManager(transformManager) {
     keyStates.fill(false);
     setMouseCallback(window, camera);
 }
@@ -87,13 +90,16 @@ void InputManager::handleMouseMovement(double xpos, double ypos, const std::shar
     }
 
     float xoffset = static_cast<float>(xpos) - lastX;
-    float yoffset = lastY - static_cast<float>(ypos);
-
     lastX = static_cast<float>(xpos);
-    lastY = static_cast<float>(ypos);
 
     if (mouseControl) {
-        camera->processMouseMovement(xoffset, yoffset);
+        for (int entity : entityManager.getEntities()) {
+            if (inputManagerComponent.hasComponent(entity)) {
+                TransformComponent& transformComp = transformManager.getComponent(entity);
+                float objectYawOffset = xoffset * objectSensitivity;
+                transformComp.rotation.y += objectYawOffset;
+            }
+        }
     }
 }
 

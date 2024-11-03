@@ -20,7 +20,6 @@
 #include "../../components/TransformComponent.h"
 #include "../../components/VelocityComponent.h"
 #include "../../components/InputComponent.h"
-#include "../../components/CameraComponent.h"
 
 class GameManager {
 public:
@@ -52,12 +51,9 @@ private:
     ComponentManager<RenderComponent> renderManager;
     ComponentManager<VelocityComponent> velocityManager;
     ComponentManager<InputComponent> inputManagerComponent;
-    ComponentManager<CameraComponent> cameraManager;
 
     std::shared_ptr<PhysicsSystem> physicsSystem;
     std::shared_ptr<InputSystem> inputSystem;
-    std::shared_ptr<CameraSystem> cameraSystem;
-
 
     float lastFrameTime = 0.0f;
 };
