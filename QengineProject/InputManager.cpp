@@ -19,7 +19,7 @@ InputManager::InputManager(const std::shared_ptr<Window>& window, const std::sha
 
 void InputManager::processInput(const std::shared_ptr <Window>& window, const std::shared_ptr<Camera>& camera) {
     float deltaTime = timer->getDeltaTime();
-    // Movement keys (W, A, S, D, Space, Shift)
+    // Movement keys (Arrow keys, Space, Shift)
     if (isKeyPressed(window, GLFW_KEY_UP))
         camera->processKeyboard(FORWARD, deltaTime);
     if (isKeyPressed(window, GLFW_KEY_DOWN))

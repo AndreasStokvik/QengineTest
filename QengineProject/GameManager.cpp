@@ -17,7 +17,7 @@ void GameManager::init() {
 
     inputManager = std::make_shared<InputManager>(window, camera, inputManagerComponent, entityManager, transformManager);
     physicsSystem = std::make_shared<PhysicsSystem>(entityManager, transformManager, velocityManager);
-    inputSystem = std::make_shared<InputSystem>(entityManager, inputManagerComponent, velocityManager, inputManager);
+    inputSystem = std::make_shared<InputSystem>(entityManager, inputManagerComponent, velocityManager, inputManager, transformManager);
 
     // Entity creation  ----------------------------------------------------------------------------------------------------------------------------------------
     int entityId = entityManager.createEntity();
