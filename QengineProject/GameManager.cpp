@@ -48,7 +48,7 @@ void GameManager::run()
     while (!window->shouldClose()) {
         glfwPollEvents();
         processInput();
-        //camera->updateProjectionMatrix();
+        camera->updateProjectionMatrix(shader);
         render();
         window->swapBuffers();
     }

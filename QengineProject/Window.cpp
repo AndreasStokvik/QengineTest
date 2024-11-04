@@ -49,19 +49,11 @@ void Window::setSize(int newWidth, int newHeight) {
     height = newHeight;
 }
 
-void Window::setResizeCallback(GLFWwindowsizefun callback) {
-    glfwSetWindowSizeCallback(window, callback);
-}
-
 void Window::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
     Window* windowInstance = static_cast<Window*>(glfwGetWindowUserPointer(window));
-    if (windowInstance) {
-        windowInstance->setSize(width, height);
-        if (windowInstance->camera) {
-            windowInstance->camera->setAspectRatio(windowInstance->getAspectRatio());
-            windowInstance->camera->updateProjectionMatrix();
-        }
+    if (windowInstance && windowInstance->camera) {
+        windowInstance->camera->setAspectRatio((float)width/height);
     }
 }
 
@@ -80,7 +72,7 @@ void Window::initGLFW() {
 void Window::swapBuffers() {glfwSwapBuffers(window);}
 bool Window::shouldClose() {return glfwWindowShouldClose(window);}
 bool Window::isKeyPressed(int key) {return glfwGetKey(window, key) == GLFW_PRESS;}
-float Window::getAspectRatio() const {return static_cast<float>(width) / static_cast<float>(height);}
+float Window::getAspectRatio() const {return (float) width/height;}
 
 void Window::toggleCursor() {
     if (cursorHidden) {

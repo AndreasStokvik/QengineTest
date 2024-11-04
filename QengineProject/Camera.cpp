@@ -16,7 +16,6 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitchw)
     this->yaw = yaw;
     this->pitch = pitch;
     this->aspectRatio = 1.77778f;
-    updateProjectionMatrix();
     updateCameraVectors();
 }
 
@@ -68,9 +67,10 @@ void Camera::setProjectionUniform(const std::shared_ptr<Shader> shader)
     shader->setUniform("projection", projection);
 }
 
-void Camera::updateProjectionMatrix() {
+void Camera::updateProjectionMatrix(const std::shared_ptr<Shader> shader) {
     projection = glm::perspective(glm::radians(fov), aspectRatio, nearPlane, farPlane);
-    std::cout << "Ratio: " << aspectRatio << std::endl;
+    shader->setUniform("projection", projection);
+    //std::cout << "Ratio: " << aspectRatio << std::endl;
 }
 
 // Processes input received from the scroll wheel (not used)

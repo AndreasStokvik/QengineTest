@@ -57,7 +57,7 @@ public:
 
     void setProjectionUniform(const std::shared_ptr<Shader> shader);
 
-    void updateProjectionMatrix();
+    void updateProjectionMatrix(const std::shared_ptr<Shader> shader);
 
     // Processes input from the mouse scroll wheel (not used)
     void processMouseScroll(float yoffset);

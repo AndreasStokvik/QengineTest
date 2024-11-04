@@ -11,6 +11,7 @@ class Window {
 public:
     int width, height;
     std::shared_ptr<Camera> camera;
+    GLFWwindow* window;
 
     Window(int width, int height, const std::string& title, const std::shared_ptr<Camera>& camera);
     ~Window();
@@ -31,12 +32,10 @@ public:
     }
 
     void setSize(int newWidth, int newHeight);
-    void setResizeCallback(GLFWwindowsizefun callback);
 
     static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 
 private:
-    GLFWwindow* window;
     bool cursorHidden;
 
     void initGLFW();
