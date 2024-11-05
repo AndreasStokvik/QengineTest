@@ -1,8 +1,8 @@
 #ifndef INPUTMANAGER_H
 #define INPUTMANAGER_H
-
 #include <array>
 #include <memory>
+
 #include "Window.h"
 #include "Camera.h"
 #include "ComponentManager.h"

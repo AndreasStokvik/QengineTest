@@ -1,11 +1,10 @@
 #ifndef SHADER_H
 #define SHADER_H
-
-#include "Camera.h"
-
 #include <string>
 #include <glm/glm.hpp>
 #include <memory>
+
+#include "Camera.h"
 
 class Camera;   // Forward declaration
 

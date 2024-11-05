@@ -1,16 +1,14 @@
 #pragma once
-
 #include <iostream>
 #include <string>
-
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
+#include <glm/glm.hpp>
 
 #include "EntityManager.h"
 #include "ComponentManager.h"
 #include "../../components/TransformComponent.h"
 #include "../../components/VelocityComponent.h"
-#include <glm/glm.hpp>
 
 class PhysicsSystem {
 public:

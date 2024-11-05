@@ -1,11 +1,10 @@
 #ifndef CAMERA_H
 #define CAMERA_H
-
-#include "Shader.h"
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory>
+
+#include "Shader.h"
 
 class Shader; // Forward declaration
 
