@@ -92,6 +92,11 @@ glm::vec3 Camera::getPosition() const {
     return position;
 }
 
+glm::mat4 Camera::getProjectionMatrix() const
+{
+    return projection;
+}
+
 void Camera::setPosition(const glm::vec3& newPosition) {
     position = newPosition + cameraOffset;
     updateCameraVectors();

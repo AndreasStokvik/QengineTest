@@ -1,4 +1,5 @@
 #include "GameManager.h"
+#include <glm/glm.hpp>
 GameManager::GameManager() {}
 
 void GameManager::init() {
@@ -22,6 +23,7 @@ void GameManager::init() {
     auto modelPtr2 = std::make_shared<Model>("models/test1.obj");
     renderManager.addComponent(entity2, RenderComponent(modelPtr2));
     transformManager.addComponent(entity2, TransformComponent(glm::vec3(10.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.5f), glm::vec3(0.5f)));
+    colliderManager.addComponent(entity2, ColliderComponent(ColliderType::BOX, glm::vec3(0.0f), glm::vec3(10.0f)));
 
     int entity3 = entityManager.createEntity();
     auto modelPtr3 = std::make_shared<Model>("models/environment.obj");
@@ -35,6 +37,7 @@ void GameManager::init() {
 
 
     shader = std::make_shared<Shader>("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl", camera);
+    wireframeShader = std::make_shared<Shader>("shaders/flat_vertex_shader.glsl", "shaders/flat_fragment_shader.glsl", camera);
     transform = std::make_shared<Transform>(camera, shader);
 
     shader->use();

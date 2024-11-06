@@ -21,6 +21,7 @@
 #include "../../components/TransformComponent.h"
 #include "../../components/VelocityComponent.h"
 #include "../../components/InputComponent.h"
+#include "../../components/ColliderComponent.h"
 
 class GameManager {
 public:
@@ -37,6 +38,8 @@ private:
     void render();                     // Renders the scene
     void processInput();               // Handles input processing
 
+    bool showWireframe = true;
+
     std::shared_ptr<InputManager> inputManager;
     std::shared_ptr<ImGuiManager> imguiManager;
     std::shared_ptr<Transform> transform;
@@ -44,6 +47,7 @@ private:
     std::shared_ptr<Model> model;
 
     std::shared_ptr<Shader> shader;
+    std::shared_ptr<Shader> wireframeShader;
 
     // ECS
     EntityManager entityManager;
@@ -52,6 +56,7 @@ private:
     ComponentManager<RenderComponent> renderManager;
     ComponentManager<VelocityComponent> velocityManager;
     ComponentManager<InputComponent> inputManagerComponent;
+    ComponentManager<ColliderComponent> colliderManager;
 
     std::shared_ptr<PhysicsSystem> physicsSystem;
     std::shared_ptr<InputSystem> inputSystem;

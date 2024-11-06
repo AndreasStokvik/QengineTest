@@ -99,6 +99,9 @@
     <ClCompile Include="CameraSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\components\ColliderComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -188,6 +191,9 @@
     <ClInclude Include="CameraSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\components\ColliderComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\shaders\fragment_shader.glsl">
@@ -196,5 +202,7 @@
     <None Include="..\shaders\vertex_shader.glsl">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="..\shaders\flat_fragment_shader.glsl" />
+    <None Include="..\shaders\flat_vertex_shader.glsl" />
   </ItemGroup>
 </Project>

@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\components\CameraComponent.cpp" />
+    <ClCompile Include="..\components\ColliderComponent.cpp" />
     <ClCompile Include="..\components\InputComponent.cpp" />
     <ClCompile Include="..\components\RenderComponent.cpp" />
     <ClCompile Include="..\components\TransformComponent.cpp" />
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\components\CameraComponent.h" />
+    <ClInclude Include="..\components\ColliderComponent.h" />
     <ClInclude Include="..\components\InputComponent.h" />
     <ClInclude Include="..\components\RenderComponent.h" />
     <ClInclude Include="..\components\TransformComponent.h" />
@@ -198,6 +200,8 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\shaders\flat_fragment_shader.glsl" />
+    <None Include="..\shaders\flat_vertex_shader.glsl" />
     <None Include="..\shaders\fragment_shader.glsl" />
     <None Include="..\shaders\vertex_shader.glsl" />
   </ItemGroup>

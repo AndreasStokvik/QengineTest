@@ -62,6 +62,8 @@ public:
     void processMouseScroll(float yoffset);
 
     glm::vec3 getPosition() const;
+    glm::mat4 getProjectionMatrix() const;
+
     void setPosition(const glm::vec3& newPosition);
     void setTarget(const glm::vec3& target);
 
