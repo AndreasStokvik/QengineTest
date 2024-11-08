@@ -9,35 +9,33 @@ void GameManager::init() {
     inputManager = std::make_shared<InputManager>(window, camera, inputManagerComponent, entityManager, transformManager);
     physicsSystem = std::make_shared<PhysicsSystem>(entityManager, transformManager, velocityManager);
     inputSystem = std::make_shared<InputSystem>(entityManager, inputManagerComponent, velocityManager, inputManager, transformManager);
+    renderHandler = std::make_shared<RenderHandler>();
 
 
     // Entity creation  ----------------------------------------------------------------------------------------------------------------------------------------
     int entityId = entityManager.createEntity();
-    auto modelPtr1 = std::make_shared<Model>("models/cube2.obj");
-    renderManager.addComponent(entityId, RenderComponent(modelPtr1));
+    renderManager.addComponent(entityId, RenderComponent(std::make_shared<Model>("models/cube2.obj")));
     transformManager.addComponent(entityId, TransformComponent(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f), glm::vec3(1.0f)));
     velocityManager.addComponent(entityId, VelocityComponent(glm::vec3(0.0f, 0.0f, 0.0f)));
     inputManagerComponent.addComponent(entityId, InputComponent());
 
     int entity2 = entityManager.createEntity();
-    auto modelPtr2 = std::make_shared<Model>("models/test1.obj");
-    renderManager.addComponent(entity2, RenderComponent(modelPtr2));
+    renderManager.addComponent(entity2, RenderComponent(std::make_shared<Model>("models/test1.obj")));
     transformManager.addComponent(entity2, TransformComponent(glm::vec3(10.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.5f), glm::vec3(0.5f)));
     colliderManager.addComponent(entity2, ColliderComponent(ColliderType::BOX, glm::vec3(0.0f), glm::vec3(10.0f)));
 
     int entity3 = entityManager.createEntity();
-    auto modelPtr3 = std::make_shared<Model>("models/environment.obj");
-    renderManager.addComponent(entity3, RenderComponent(modelPtr3));
+    renderManager.addComponent(entity3, RenderComponent(std::make_shared<Model>("models/environment.obj")));
     transformManager.addComponent(entity3, TransformComponent(glm::vec3(2.0f, -5.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.5f), glm::vec3(0.12f)));
 
     int entityId4 = entityManager.createEntity();
-    renderManager.addComponent(entityId4, RenderComponent(modelPtr1));
+    renderManager.addComponent(entityId4, RenderComponent(std::make_shared<Model>("models/cube2.obj")));
     transformManager.addComponent(entityId4, TransformComponent(glm::vec3(-20.0f, 10.0f, -20.0f), glm::vec3(45.0f, 0.0f, 45.0f), glm::vec3(10.0f)));
     //  --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
     shader = std::make_shared<Shader>("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl", camera);
-    wireframeShader = std::make_shared<Shader>("shaders/flat_vertex_shader.glsl", "shaders/flat_fragment_shader.glsl", camera);
+    //wireframeShader = std::make_shared<Shader>("shaders/flat_vertex_shader.glsl", "shaders/flat_fragment_shader.glsl", camera);
     transform = std::make_shared<Transform>(camera, shader);
 
     shader->use();
@@ -91,8 +89,8 @@ void GameManager::render() {
             transform->update(transformComp, shader);
 
             if (renderManager.hasComponent(entity)) {
-                RenderComponent& renderComp = renderManager.getComponent(entity);
-                renderComp.model->draw(shader);
+                RenderComponent& renderComp = renderManager.getComponent(entity);  
+                renderHandler->draw(*renderComp.model, shader, false);
             }
         }
     }

@@ -12,6 +12,7 @@
 #include "PhysicsSystem.h"
 #include "InputSystem.h"
 #include "CameraSystem.h"
+#include "RenderHandler.h"
 
 // ECS
 #include "ComponentManager.h"
@@ -40,6 +41,7 @@ private:
 
     bool showWireframe = true;
 
+    std::shared_ptr<RenderHandler> renderHandler;
     std::shared_ptr<InputManager> inputManager;
     std::shared_ptr<ImGuiManager> imguiManager;
     std::shared_ptr<Transform> transform;

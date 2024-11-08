@@ -9,7 +9,6 @@
 #include <assimp/postprocess.h>
 #include <glm/glm.hpp>
 #include <glad/glad.h>
-#include "Shader.h"
 
 struct Vertex {
     glm::vec3 Position;
@@ -29,10 +28,11 @@ public:
 
     void loadModel(const std::string& path);
 
-    void draw(const std::shared_ptr<Shader>& shader);
-
     std::vector<unsigned int> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 
+    const std::vector<Vertex>& getVertices() const { return vertices; }
+    const std::vector<unsigned int>& getIndices() const { return indices; }
+    const std::vector<unsigned int>& getTextures() const { return textures; }
 private:
     void processNode(aiNode* node, const aiScene* scene);
 
