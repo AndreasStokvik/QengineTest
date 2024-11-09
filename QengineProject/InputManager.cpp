@@ -1,4 +1,5 @@
 #include "InputManager.h"
+#include "GameManager.h"
 #include <GLFW/glfw3.h>
 
 struct InputCameraContext {
@@ -10,9 +11,9 @@ std::unique_ptr<Timer> timer = std::make_unique<Timer>();
 
 InputManager::InputManager(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera, 
     ComponentManager<InputComponent>& inputManagerComponent, EntityManager& entityManager,
-    ComponentManager<TransformComponent>& transformManager)
+    ComponentManager<TransformComponent>& transformManager, GameManager& gameManager)
     : lastX(400), lastY(300), firstMouse(true), inputManagerComponent(inputManagerComponent),
-    entityManager(entityManager), transformManager(transformManager) {
+    entityManager(entityManager), transformManager(transformManager), gameManager(gameManager) {
     keyStates.fill(false);
     setMouseCallback(window, camera);
 }
@@ -37,6 +38,7 @@ void InputManager::processInput(const std::shared_ptr <Window>& window, const st
     if (isKeyPressedOnce(window, GLFW_KEY_ESCAPE)) {
         window->toggleCursor();
         toggleMouseControl();
+        gameManager.toggleImguiDebug();
     }
 }
 

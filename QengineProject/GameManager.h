@@ -7,7 +7,6 @@
 #include "Model.h"
 #include "ColliderMeshFactory.h"
 #include "Transform.h"
-#include "InputManager.h"
 #include "ImGuiManager.h"
 
 // Systems
@@ -26,12 +25,16 @@
 #include "../../components/InputComponent.h"
 #include "../../components/ColliderComponent.h"
 
+class InputManager;
+
 class GameManager {
 public:
     GameManager();                     // Constructor to initialize components
     void init();                       // Initializes all systems
     void run();                        // Main game loop
     void shutdown();                   // Cleans up resources
+
+    void toggleImguiDebug();           // Toggles the debug UI
 
     std::shared_ptr<Camera> camera;
     std::shared_ptr<Window> window;
@@ -42,6 +45,7 @@ private:
     void processInput();               // Handles input processing
 
     bool showWireframe = false;
+    bool showImguiDebug = false;
     std::unordered_map<int, Model> colliderMeshes;
 
     std::shared_ptr<RenderHandler> renderHandler;

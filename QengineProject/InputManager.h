@@ -10,6 +10,8 @@
 #include "../../components/InputComponent.h"
 #include "../../components/TransformComponent.h"
 
+class GameManager;
+
 class Timer {
 public:
     float getDeltaTime() {
@@ -26,7 +28,7 @@ class InputManager {
 public:
     InputManager(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera, 
         ComponentManager<InputComponent>& inputManagerComponent, EntityManager& entityManager, 
-        ComponentManager<TransformComponent>&transformManager);
+        ComponentManager<TransformComponent>&transformManager, GameManager& gameManager);
 
     void processInput(const std::shared_ptr<Window>& window, const std::shared_ptr<Camera>& camera);
     bool isKeyPressedOnce(const std::shared_ptr<Window>& window, int key);
@@ -48,6 +50,7 @@ private:
     ComponentManager<InputComponent>& inputManagerComponent;
     ComponentManager<TransformComponent>& transformManager;
     EntityManager& entityManager;
+    GameManager& gameManager;
 };
 
 #endif // INPUTMANAGER_H

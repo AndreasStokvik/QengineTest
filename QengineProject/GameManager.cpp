@@ -1,15 +1,17 @@
 #include "GameManager.h"
 #include <glm/glm.hpp>
+#include "InputManager.h"
+
 GameManager::GameManager() {}
 
 void GameManager::init() {
     camera = std::make_shared<Camera>(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 1.0f, 0.0f), -90.0f, 0.0f);
     window = std::make_shared<Window>(1280, 720, "OpenGL Window", camera);
-    imguiManager = std::make_shared<ImGuiManager>(window);
-    inputManager = std::make_shared<InputManager>(window, camera, inputManagerComponent, entityManager, transformManager);
+    inputManager = std::make_shared<InputManager>(window, camera, inputManagerComponent, entityManager, transformManager, *this);
     physicsSystem = std::make_shared<PhysicsSystem>(entityManager, transformManager, velocityManager);
     inputSystem = std::make_shared<InputSystem>(entityManager, inputManagerComponent, velocityManager, inputManager, transformManager);
     renderHandler = std::make_shared<RenderHandler>();
+    imguiManager = std::make_shared<ImGuiManager>(window);
 
 
     // Entity creation  ----------------------------------------------------------------------------------------------------------------------------------------
@@ -101,7 +103,10 @@ void GameManager::render() {
         }
     }
 
-    //imguiManager->BasicText("Title", "text");
+    if (showImguiDebug) {
+        //imguiManager->DemoWindow("demo window");
+        imguiManager->BasicCheckbox("Debug Options", "Show Wireframe", showWireframe);
+    }
 }
 
 void GameManager::shutdown() {
@@ -109,6 +114,12 @@ void GameManager::shutdown() {
     glfwTerminate();
 }
 
-void GameManager::processInput() { 
-    inputManager->processInput(window, camera); 
+void GameManager::processInput() {
+    if (!ImGui::GetIO().WantCaptureKeyboard) {
+        inputManager->processInput(window, camera);
+    }
+}
+
+void GameManager::toggleImguiDebug() {
+    showImguiDebug = !showImguiDebug;
 }

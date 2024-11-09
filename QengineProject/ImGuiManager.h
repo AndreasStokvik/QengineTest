@@ -12,6 +12,8 @@ class ImGuiManager
 public:
 	ImGuiManager(const std::shared_ptr<Window>& window);
 	void BasicText(const std::string& stringA, const std::string& stringB);
+	void BasicCheckbox(const std::string& windowTitle, const std::string& label, bool& checkboxState);
+	void DemoWindow(const std::string& windowTitle);
 	void shutdown();
 };
 
