@@ -153,6 +153,7 @@
     <ClCompile Include="..\libs\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraSystem.cpp" />
+    <ClCompile Include="ColliderMeshFactory.cpp" />
     <ClCompile Include="ComponentManager.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="..\libs\imgui\imstb_truetype.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraSystem.h" />
+    <ClInclude Include="ColliderMeshFactory.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />

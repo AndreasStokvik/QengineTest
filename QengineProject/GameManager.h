@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Model.h"
+#include "ColliderMeshFactory.h"
 #include "Transform.h"
 #include "InputManager.h"
 #include "ImGuiManager.h"
@@ -47,6 +48,7 @@ private:
     std::shared_ptr<Transform> transform;
 
     std::shared_ptr<Model> model;
+    //std::shared_ptr<ColliderMeshFactory> ColliderMeshFactory;
 
     std::shared_ptr<Shader> shader;
     std::shared_ptr<Shader> wireframeShader;

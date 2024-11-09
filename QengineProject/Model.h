@@ -25,8 +25,10 @@ struct TextureData {
 class Model {
 public:
     Model(const std::string& path);
+    Model() = default;
 
     void loadModel(const std::string& path);
+    void setMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 
     std::vector<unsigned int> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 

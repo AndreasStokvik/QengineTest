@@ -18,6 +18,7 @@ void GameManager::init() {
     transformManager.addComponent(entityId, TransformComponent(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.0f), glm::vec3(1.0f)));
     velocityManager.addComponent(entityId, VelocityComponent(glm::vec3(0.0f, 0.0f, 0.0f)));
     inputManagerComponent.addComponent(entityId, InputComponent());
+    colliderManager.addComponent(entityId, ColliderComponent(ColliderType::SPHERE, glm::vec3(0.0f), glm::vec3(20.0f)));
 
     int entity2 = entityManager.createEntity();
     renderManager.addComponent(entity2, RenderComponent(std::make_shared<Model>("models/test1.obj")));
@@ -73,7 +74,12 @@ void GameManager::update() {
         }
         if (inputManagerComponent.hasComponent(entity)) {
             TransformComponent& transformComp = transformManager.getComponent(entity);
-            camera->followObject(transformComp.position, transformComp.rotation.y);
+            //camera->followObject(transformComp.position, transformComp.rotation.y);
+        }
+        if (colliderManager.hasComponent(entity)) {
+            ColliderComponent& colliderComp = colliderManager.getComponent(entity);
+            Model colliderMesh = ColliderMeshFactory::createColliderMesh(colliderComp);
+            renderHandler->draw(colliderMesh, shader, true);
         }
     }
 }

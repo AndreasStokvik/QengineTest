@@ -31,6 +31,12 @@ void Model::loadModel(const std::string& path) {
     processNode(scene->mRootNode, scene);
 }
 
+void Model::setMesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices)
+{
+    this->vertices = vertices;
+    this->indices = indices;
+}
+
 // Process each node in the scene
 void Model::processNode(aiNode* node, const aiScene* scene) {
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
