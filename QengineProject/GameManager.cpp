@@ -36,7 +36,6 @@ void GameManager::init() {
 
 
     shader = std::make_shared<Shader>("shaders/vertex_shader.glsl", "shaders/fragment_shader.glsl", camera);
-    //wireframeShader = std::make_shared<Shader>("shaders/flat_vertex_shader.glsl", "shaders/flat_fragment_shader.glsl", camera);
     transform = std::make_shared<Transform>(camera, shader);
 
     shader->use();
@@ -74,12 +73,7 @@ void GameManager::update() {
         }
         if (inputManagerComponent.hasComponent(entity)) {
             TransformComponent& transformComp = transformManager.getComponent(entity);
-            //camera->followObject(transformComp.position, transformComp.rotation.y);
-        }
-        if (colliderManager.hasComponent(entity)) {
-            ColliderComponent& colliderComp = colliderManager.getComponent(entity);
-            Model colliderMesh = ColliderMeshFactory::createColliderMesh(colliderComp);
-            renderHandler->draw(colliderMesh, shader, true);
+            camera->followObject(transformComp.position, transformComp.rotation.y);
         }
     }
 }
@@ -97,6 +91,12 @@ void GameManager::render() {
             if (renderManager.hasComponent(entity)) {
                 RenderComponent& renderComp = renderManager.getComponent(entity);  
                 renderHandler->draw(*renderComp.model, shader, false);
+            }
+
+            if (colliderManager.hasComponent(entity) && showWireframe) {
+                ColliderComponent& colliderComp = colliderManager.getComponent(entity);
+                Model colliderMesh = ColliderMeshFactory::createColliderMesh(colliderComp);
+                renderHandler->draw(colliderMesh, shader, true);
             }
         }
     }

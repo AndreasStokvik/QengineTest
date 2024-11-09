@@ -1,4 +1,5 @@
 #include <memory>
+#include <unordered_map>
 
 #include "Window.h"
 #include "Shader.h"
@@ -40,7 +41,8 @@ private:
     void render();                     // Renders the scene
     void processInput();               // Handles input processing
 
-    bool showWireframe = true;
+    bool showWireframe = false;
+    std::unordered_map<int, Model> colliderMeshes;
 
     std::shared_ptr<RenderHandler> renderHandler;
     std::shared_ptr<InputManager> inputManager;
@@ -51,7 +53,6 @@ private:
     //std::shared_ptr<ColliderMeshFactory> ColliderMeshFactory;
 
     std::shared_ptr<Shader> shader;
-    std::shared_ptr<Shader> wireframeShader;
 
     // ECS
     EntityManager entityManager;
